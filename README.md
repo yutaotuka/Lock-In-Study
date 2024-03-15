@@ -82,3 +82,10 @@ Lock In Studyは主に2つの機能があります
  　カテゴリー例「プログラミング・英語・aws等」
  * カテゴリーごとでの計測機能
  　勉強時間計測開始時に上記で作成したカテゴリーを選択してカテゴリー毎に勉強時間・質問への回答を管理できるようにする。
+
+ ### 画面遷移図
+Figma : https://www.figma.com/file/J8zq5K6iB66vGLrMDfcUVj/Lock-In-Study?type=design&node-id=0-1&mode=design&t=Dib9uffXOm5mWtsb-0
+
+
+### ER図
+drow.io : https://drive.google.com/file/d/1kICFDQ5gEX7CCyFQ4HivtaYIBhddf9sB/view?usp=sharing
