@@ -8,6 +8,8 @@ Bundler.require(*Rails.groups)
 
 module LockInStudy
   class Application < Rails::Application
+    config.i18n.default_locale = :ja
+    donfig.i18n.load_path += Dir[Rails.root.join('config/locales/*.yml').to_s]
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.1
 
