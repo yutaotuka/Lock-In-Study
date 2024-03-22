@@ -1,0 +1,67 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+ /* header footer */
+.header, .footer {
+  background: #5fd7df;
+  padding: 20px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.header a, .footer a{
+  color: black;
+  text-decoration: none;
+}
+
+.header a:hover, .footer a:hover {
+  text-decoration: underline;
+}
+
+.logo, .login {
+  margin: 0 20px;
+  font-weight: 800;
+  font-size: 24px;
+}
+
+/* after_login_header */
+.navigation a{
+  padding: 0 12px;
+  font-size: 18px;
+}
+
+/* footer */
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: fixed;
+  justify-content: space-evenly;
+}
+
+.terms, .privacy, .contact {
+  font-weight: 80;
+  font-size: 24px;
+}
