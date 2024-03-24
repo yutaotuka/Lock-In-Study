@@ -10,8 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_22_080313) do
-  create_table "answers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+ActiveRecord::Schema[7.1].define(version: 2024_03_24_124718) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "answers", force: :cascade do |t|
     t.integer "first_answer_choice"
     t.text "second_answer"
     t.text "third_answer"
@@ -21,7 +24,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_22_080313) do
     t.index ["user_id"], name: "index_answers_on_user_id"
   end
 
-  create_table "study_records", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "study_records", force: :cascade do |t|
     t.datetime "start_time"
     t.datetime "end_time"
     t.integer "duration_time"
@@ -31,7 +34,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_22_080313) do
     t.index ["user_id"], name: "index_study_records_on_user_id"
   end
 
-  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "line_user_id"
     t.datetime "created_at", null: false
