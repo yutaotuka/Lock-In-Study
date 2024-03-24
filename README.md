@@ -58,7 +58,7 @@ Lock In Studyは主に2つの機能があります
     * Rails 7.1.3.4
 
  * データベース
-    * MySQL
+    * PostgreSQL
 
  * フロントエンド
     * HTML
