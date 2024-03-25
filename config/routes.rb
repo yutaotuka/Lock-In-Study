@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   get "login" => "login#login"
   delete 'logout', to: 'setting#destroy', as: 'logout'
 
+  get '/measure' => 'measure#index'
+
   # Defines the root path route ("/")
   # root "posts#index"
 end
