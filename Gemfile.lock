@@ -269,6 +269,7 @@ DEPENDENCIES
   capybara
   debug
   dockerfile-rails (>= 1.6)
+  execjs
   importmap-rails
   jbuilder
   jquery-rails
