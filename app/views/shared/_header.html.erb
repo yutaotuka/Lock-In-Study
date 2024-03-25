@@ -6,6 +6,6 @@
     <%= link_to '時間一覧', '#' %>
     <%= link_to '回答一覧', '#' %>
     <%# link_to '設定/ログアウト', '#' %>
-    <%= link_to 'ログアウト', logout_path, method: :delete  %>
+    <%= link_to 'ログアウト', logout_path, data: { turbo_method: :delete }  %>
   </nav>
 </div>
