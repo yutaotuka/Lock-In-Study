@@ -114,3 +114,26 @@ h1 {
   width: 80%;
   margin: 20px auto;
 }
+
+/* login */
+.login-content {
+  padding-top: 45%;
+  text-align: center;
+}
+
+.login-button {
+  background-color: #00c300;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  display: inline-block;
+  font-size: 30px;
+  margin-top: 6px 4px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.login-button:hover {
+  background-color: #00e000;
+}
