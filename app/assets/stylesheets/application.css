@@ -166,3 +166,7 @@ h1 {
 .feature .start-button:hover {
   text-decoration: underline;
 }
+
+.feature h1 {
+  margin-top: -6px;
+}
