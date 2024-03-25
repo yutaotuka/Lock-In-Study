@@ -48,11 +48,11 @@ class LineLoginApiController < ApplicationController
         redirect_to root_path, notice: 'ログインしました'
       else
         # 保存に失敗した場合はエラーメッセージを表示
-        redirect_to login_path, notice: 'ログインに失敗しました'
+        redirect_to login_path, alert: 'ログインに失敗しました'
       end
     else
       # CSRFトークンが不一致の場合はエラーメッセージを表示
-      redirect_to root_path, notice: '不正なアクセスです'
+      redirect_to root_path, alert: '不正なアクセスです'
     end
   end
 
