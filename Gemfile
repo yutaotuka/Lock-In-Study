@@ -8,10 +8,6 @@ gem 'rails-i18n', '~> 7.0.0'
 gem 'jwt'
 gem 'typhoeus'
 
-gem 'jquery-rails'
-gem 'bootstrap'
-gem 'execjs'
-
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.3", ">= 7.1.3.2"
 
