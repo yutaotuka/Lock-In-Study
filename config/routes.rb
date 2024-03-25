@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   get "login" => "login#login"
+  delete 'logout', to: 'settings#destroy', as: 'logout'
 
   # Defines the root path route ("/")
   # root "posts#index"
