@@ -15,12 +15,12 @@
  */
 
  /* flash */
- #flash {
+#flash {
   padding-top: 85px;
   text-align: center;
   font-size: large;
   font-weight: bold;
- }
+}
 
  /* header footer */
 .header, .footer {
