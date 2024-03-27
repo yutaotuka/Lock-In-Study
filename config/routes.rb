@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   delete 'logout', to: 'setting#destroy', as: 'logout'
 
   # get '/study_records' => 'study_records#index'
-  responses :study_records, only: [:index] do
+  resources :study_records, only: [:index] do
     member do
       patch :stop
     end
