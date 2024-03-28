@@ -1,6 +1,6 @@
 class StudyRecordsController < ApplicationController
   def start
-    @study_record = StudyRecord.new(start_time: Time.current, user_id: current.user_id)
+    @study_record = StudyRecord.new(start_time: Time.current, user_id: current_user.id)
     if @study_record.save
       render json: { success: true, study_record_id: @study_record_id }
     else
