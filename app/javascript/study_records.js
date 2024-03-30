@@ -1,3 +1,6 @@
+import "@hotwired/turbo-rails"
+import "controllers"
+
 document.addEventListener('turbo:load', function() {
   var startBtn = document.getElementById('start-btn');
   var stopBtn = document.getElementById('stop-btn');
