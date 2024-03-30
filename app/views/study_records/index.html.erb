@@ -31,7 +31,7 @@
     });
 
     stopBtn.addEventListener('click', function() {
-      fetch('/study_records/${studyRecordId}/stop', {
+      fetch(`/study_records/${studyRecordId}/stop`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -41,8 +41,8 @@
       .then(response => response.json())
       .then(data => {
         if (data.success) {
-          startBtn.style.display = 'inline';
           stopBtn.style.display = 'none';
+          startBtn.style.display = 'inline';
           alert('おつかれさま！！'); 
         } else {
           alert('時間測定に失敗しました。');
