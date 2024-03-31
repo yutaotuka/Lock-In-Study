@@ -177,12 +177,12 @@ h1 {
 
     /* recording_drone */
 .animate-img_box {
-  animation: drone_fuwafuwa 3s linear infinite;
+  animation: drone_fuwafuwa 4s linear infinite;
   transform-origin: 50% 50%;
 }
 @keyframes drone_fuwafuwa {
   0% { transform: translateY(0); }
-  33.33333% { transform: translateY(-10px); }
+  33.33333% { transform: translateY(-30px); }
   66.66667% { transform: translateY(0); }
   100% { transform: translateY(0); }
 }
