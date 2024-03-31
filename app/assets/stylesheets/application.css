@@ -182,7 +182,7 @@ h1 {
 }
 @keyframes drone_fuwafuwa {
   0% { transform: translateY(0); }
-  33.33333% { transform: translateY(-42px); }
+  33.33333% { transform: translateY(-30px); }
   66.66667% { transform: translateY(0); }
   100% { transform: translateY(0); }
 }
