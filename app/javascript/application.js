@@ -6,7 +6,7 @@ import "controllers"
 document.addEventListener('turbo:load', function() {
   var startBtn = document.getElementById('start-btn');
   var stopBtn = document.getElementById('stop-btn');
-  var imgBox = document.querySelector('.img_box');
+  var imgBox = document.querySelector('drone-img');
   var studyRecordId;
 
   startBtn.addEventListener('click', function() {
