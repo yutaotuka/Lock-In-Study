@@ -6,6 +6,7 @@ import "controllers"
 document.addEventListener('turbo:load', function() {
   var startBtn = document.getElementById('start-btn');
   var stopBtn = document.getElementById('stop-btn');
+  var imgBox = document.querySelector('.img_box');
   var studyRecordId;
 
   startBtn.addEventListener('click', function() {
@@ -22,7 +23,7 @@ document.addEventListener('turbo:load', function() {
         studyRecordId = data.study_record_id;
         startBtn.style.display = 'none';
         stopBtn.style.display = 'inline';
-        ImageBitmapRenderingContext.classList.add('animate-img_box');
+        imgBox.classList.add('animate-img_box');
       }
     });
   });
@@ -40,7 +41,7 @@ document.addEventListener('turbo:load', function() {
       if (data.success) {
         stopBtn.style.display = 'none';
         startBtn.style.display = 'inline';
-        ImageBitmapRenderingContext.classList.remove('animate-img_box');
+        imgBox.classList.remove('animate-img_box');
         alert('おつかれさま！！'); 
       } else {
         alert('時間測定に失敗しました。');
