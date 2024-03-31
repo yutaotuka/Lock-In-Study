@@ -22,6 +22,7 @@ document.addEventListener('turbo:load', function() {
         studyRecordId = data.study_record_id;
         startBtn.style.display = 'none';
         stopBtn.style.display = 'inline';
+        ImageBitmapRenderingContext.classList.add('animate-img_box');
       }
     });
   });
@@ -39,6 +40,7 @@ document.addEventListener('turbo:load', function() {
       if (data.success) {
         stopBtn.style.display = 'none';
         startBtn.style.display = 'inline';
+        ImageBitmapRenderingContext.classList.remove('animate-img_box');
         alert('おつかれさま！！'); 
       } else {
         alert('時間測定に失敗しました。');
