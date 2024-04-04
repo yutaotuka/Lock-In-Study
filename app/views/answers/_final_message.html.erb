@@ -1,0 +1,5 @@
+<!-- app/views/answers/_final_message.html.erb -->
+<%= turbo_frame_tag "question_area" do %>
+  <p>全ての質問に回答しました。引き続き頑張りましょう。</p>
+  <%= turbo_stream.replace "question_area", partial: "answers/form" %>
+<% end %>

@@ -1,0 +1,13 @@
+<!-- app/views/answers/_form.html.erb -->
+<%= turbo_frame_tag "question_area" do %>
+  <%= form_with model: @answer, url: answers_path, method: :post, data: { turbo_frame: "question_area" } do |form| %>
+    <%= form.label :first_answer_choice, "あなたは今何をしていますか？" %><br>
+    <%= form.radio_button :first_answer_choice, "study", name: 'answer[first_answer_choice]' %>
+    <%= form.label :first_answer_choice, "勉強" %>
+    <%= form.radio_button :first_answer_choice, "break", name: 'answer[first_answer_choice]' %>
+    <%= form.label :first_answer_choice, "休憩" %>
+    <%= form.radio_button :first_answer_choice, "other", name: 'answer[first_answer_choice]' %>
+    <%= form.label :first_answer_choice, "他の事" %>
+    <%= form.submit "次へ" %>
+  <% end %>
+<% end %>
