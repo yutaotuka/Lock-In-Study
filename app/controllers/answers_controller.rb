@@ -14,6 +14,7 @@ class AnswersController < ApplicationController
       if final_question_answered?(@answer)
         @answer.save
         session.delete(:answers) # セッションをクリア
+        p "全部OK"
         render_final_message
       else
         @next_question = determine_next_question(@answer)
@@ -21,6 +22,7 @@ class AnswersController < ApplicationController
       end
     else
       # バリデーションエラー時の処理
+      p "バリデーションエラー"
       respond_to do |format|
         format.turbo_stream { render turbo_stream: turbo_stream.replace("question_area", partial: "answers/form", locals: { answer: @answer }) }
         format.html { render :new }
@@ -60,10 +62,7 @@ class AnswersController < ApplicationController
   end
 
   def render_next_question_or_final_message
-    if @next_question == "質問はこれで終了です。"
-      # render_final_message
-      render turbo_stream: turbo_stream.replace("question_area", partial: "answers/final_message")
-    else
+    if @next_question != "質問はこれで終了です。"
       respond_to do |format|
         format.turbo_stream { render turbo_stream: turbo_stream.update("question_area", partial: "answers/next_question", locals: { next_question: @next_question }) }
       end
@@ -71,6 +70,7 @@ class AnswersController < ApplicationController
   end
 
   def final_question_answered?(answer)
+    p "final_question_answered?"
     # ここに最後の質問に対する回答が完了したかどうかを判定するロジックを記述
     # 例: answer.third_answer.present?
     case answer.first_answer_choice
@@ -86,15 +86,10 @@ class AnswersController < ApplicationController
   end
 
   def render_final_message
-        
     respond_to do |format|
-      format.turbo_stream { render turbo_stream: turbo_stream.update("question_area", partial: "answers/final_message") }
-      if session[:study_session_active]
-        # 勉強セッションがアクティブな場合、勉強時間測定画面にリダイレクト
-        format.html { redirect_to study_record_path(study_record_id), notice: '質問に全て答えました。勉強に戻りましょう。' }
-      else
-        # 勉強セッションが非アクティブな場合、別の適切なページ（例: ホーム）にリダイレクト
-        format.html { redirect_to root_path, notice: 'セッションが非アクティブです。' }
+      format.turbo_stream do
+        # 'question_area'を新しいフォームで置き換える
+        render turbo_stream: turbo_stream.replace("question_area", partial: "answers/final_message")
       end
     end
   end

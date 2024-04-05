@@ -2,14 +2,15 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 
-
 document.addEventListener('turbo:load', function() {
   var startBtn = document.getElementById('start-btn');
   var stopBtn = document.getElementById('stop-btn');
   var imgBox = document.getElementById('drone-img');
   var studyRecordId;
+  var questionBox = document.getElementById("question_box");
 
   startBtn.addEventListener('click', function() {
+    console.log("Start button clicked!"); 
     fetch('/study_records/start', {
       method: 'POST',
       headers: {
@@ -26,7 +27,16 @@ document.addEventListener('turbo:load', function() {
         imgBox.classList.add('animate-img_box');
       }
     });
+    
+    setTimeout(function() {
+      if (questionBox) {
+        questionBox.style.display = "block";
+      }
+    }, 10000); // 10分 = 600000ミリ秒
   });
+
+// フォームの非表示ボタン読み込み
+  setupHideButton(); 
 
   stopBtn.addEventListener('click', function() {
     fetch(`/study_records/${studyRecordId}/stop`, {
@@ -49,3 +59,15 @@ document.addEventListener('turbo:load', function() {
     });
   });
 });
+
+// フォームの非表示
+function setupHideButton() {
+  document.addEventListener('click', function(event) {
+    if (event.target.matches('#hide-form-btn')) {
+      var questionBox = document.getElementById('question_box');
+      if (questionBox) {
+        questionBox.style.display = 'none';
+      }
+    }
+  });
+}
