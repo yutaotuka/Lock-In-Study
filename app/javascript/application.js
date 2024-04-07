@@ -7,6 +7,7 @@ document.addEventListener('turbo:load', function() {
   var stopBtn = document.getElementById('stop-btn');
   var imgBox = document.getElementById('drone-img');
   var studyRecordId;
+  var intervalId;  // setIntervalのIDを保存する変数
 
   
 
@@ -28,24 +29,13 @@ document.addEventListener('turbo:load', function() {
         imgBox.classList.add('animate-img_box');
       }
     });
-    
-    // setTimeout(function() {
-    //   if (questionBox) {
-    //     questionBox.style.display = "block";
-    //   }
-    // }, 10000); // 1分 = 60000ミリ秒
 
-    setInterval(function() {
+    intervalId = setInterval(function() {
       var questionBox = document.getElementById("question_box");
       if (questionBox.style.display === "none") {
         questionBox.style.display = "block";
-        // setTimeout(function() {
-        //   questionBox.style.display = "none";
-        // }, 10000); // 5秒後に再び非表示にする
       }
     }, 30000); // 10秒ごとに処理を実行
-    
-
   });
 
   stopBtn.addEventListener('click', function() {
@@ -67,6 +57,7 @@ document.addEventListener('turbo:load', function() {
         alert('時間測定に失敗しました。');
       }
     });
+    clearInterval(intervalId);
   });
 });
 
