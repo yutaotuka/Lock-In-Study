@@ -8,6 +8,7 @@ document.addEventListener('turbo:load', function() {
   var imgBox = document.getElementById('drone-img');
   var studyRecordId;
   var intervalId;  // setIntervalのIDを保存する変数
+  var audio = new Audio('/jingle.mp3');  // 音声ファイルのパスを指定
 
   
 
@@ -34,8 +35,12 @@ document.addEventListener('turbo:load', function() {
       var questionBox = document.getElementById("question_box");
       if (questionBox.style.display === "none") {
         questionBox.style.display = "block";
+        // 音を再生
+        audio.play().catch(function(error) {
+          console.error('Audio playback failed:', error);
+        });
       }
-    }, 30000); // 10秒ごとに処理を実行
+    }, 30000); // 30秒ごとに処理を実行
   });
 
   stopBtn.addEventListener('click', function() {
