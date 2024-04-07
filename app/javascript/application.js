@@ -7,7 +7,8 @@ document.addEventListener('turbo:load', function() {
   var stopBtn = document.getElementById('stop-btn');
   var imgBox = document.getElementById('drone-img');
   var studyRecordId;
-  var questionBox = document.getElementById("question_box");
+
+  
 
   startBtn.addEventListener('click', function() {
     console.log("Start button clicked!"); 
@@ -28,15 +29,24 @@ document.addEventListener('turbo:load', function() {
       }
     });
     
-    setTimeout(function() {
-      if (questionBox) {
-        questionBox.style.display = "block";
-      }
-    }, 10000); // 10分 = 600000ミリ秒
-  });
+    // setTimeout(function() {
+    //   if (questionBox) {
+    //     questionBox.style.display = "block";
+    //   }
+    // }, 10000); // 1分 = 60000ミリ秒
 
-// フォームの非表示ボタン読み込み
-  setupHideButton(); 
+    setInterval(function() {
+      var questionBox = document.getElementById("question_box");
+      if (questionBox.style.display === "none") {
+        questionBox.style.display = "block";
+        // setTimeout(function() {
+        //   questionBox.style.display = "none";
+        // }, 10000); // 5秒後に再び非表示にする
+      }
+    }, 30000); // 10秒ごとに処理を実行
+    
+
+  });
 
   stopBtn.addEventListener('click', function() {
     fetch(`/study_records/${studyRecordId}/stop`, {
@@ -60,14 +70,11 @@ document.addEventListener('turbo:load', function() {
   });
 });
 
-// フォームの非表示
-function setupHideButton() {
-  document.addEventListener('click', function(event) {
-    if (event.target.matches('#hide-form-btn')) {
-      var questionBox = document.getElementById('question_box');
-      if (questionBox) {
-        questionBox.style.display = 'none';
-      }
-    }
-  });
-}
+// フォームの回答が終わったら非表示にする
+// _final_messageで着火させてる
+document.addEventListener('form-completed', function() {
+  var questionBox = document.getElementById("question_box");
+  if (questionBox) {
+    questionBox.style.display = "none";
+  }
+});

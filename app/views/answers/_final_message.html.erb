@@ -1,6 +1,7 @@
 <!-- app/views/answers/_final_message.html.erb -->
-<p>回答が完了しました。引き続きがんばりましょう！！</p>
-<button id="hide-form-btn">OK</button>
 <%= turbo_frame_tag "question_area" do %>
   <%= turbo_stream.replace "question_area", partial: "answers/form" %>
 <% end %>
+<script type="text/javascript">
+  document.dispatchEvent(new CustomEvent('form-completed', { bubbles: true }));
+</script>
