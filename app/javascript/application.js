@@ -2,14 +2,17 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 
-
 document.addEventListener('turbo:load', function() {
   var startBtn = document.getElementById('start-btn');
   var stopBtn = document.getElementById('stop-btn');
   var imgBox = document.getElementById('drone-img');
   var studyRecordId;
+  var intervalId;  // setIntervalのIDを保存する変数
+
+  
 
   startBtn.addEventListener('click', function() {
+    console.log("Start button clicked!"); 
     fetch('/study_records/start', {
       method: 'POST',
       headers: {
@@ -26,6 +29,13 @@ document.addEventListener('turbo:load', function() {
         imgBox.classList.add('animate-img_box');
       }
     });
+
+    intervalId = setInterval(function() {
+      var questionBox = document.getElementById("question_box");
+      if (questionBox.style.display === "none") {
+        questionBox.style.display = "block";
+      }
+    }, 30000); // 10秒ごとに処理を実行
   });
 
   stopBtn.addEventListener('click', function() {
@@ -47,5 +57,15 @@ document.addEventListener('turbo:load', function() {
         alert('時間測定に失敗しました。');
       }
     });
+    clearInterval(intervalId);
   });
+});
+
+// フォームの回答が終わったら非表示にする
+// _final_messageで着火させてる
+document.addEventListener('form-completed', function() {
+  var questionBox = document.getElementById("question_box");
+  if (questionBox) {
+    questionBox.style.display = "none";
+  }
 });
