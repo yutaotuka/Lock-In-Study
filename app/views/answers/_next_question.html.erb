@@ -11,6 +11,9 @@
       <%= form.label :third_answer, @next_question %>
       <%= form.text_field :third_answer %>
     <% end %>
-    <%= form.submit "次へ" %>
+    <%# ボタンのテキストを条件によって変更 %>
+    <% final_questions = ["それをする事で何を得ますか？", "それをしたら何を失いますか？", "あと何分休憩しますか？"] %>
+    <% submit_text = final_questions.include?(@next_question) ? "完了" : "次へ" %>
+    <%= form.submit submit_text %>
   <% end %>
 <% end %>
