@@ -210,3 +210,8 @@ border-radius: 5px;
   background-color: #31A9EE;
   color: #fff;
 }
+
+  /* second,third-question */
+.answer-form {
+  font-size: x-large;
+}

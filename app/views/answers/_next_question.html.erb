@@ -3,13 +3,13 @@
   <%= form_with model: Answer.new, url: answers_path, method: :post, data: { turbo_frame: "question_area" } do |form| %>
     <% if next_question.include?("何の勉強をしていますか？") || next_question.include?("何をしていますか？") %>
       <%= form.label :second_answer, @next_question %>
-      <%= form.text_field :second_answer %>
+      <%= form.text_field :second_answer, class: 'answer-form' %>
     <% elsif next_question.include?("あと何分休憩しますか？") %>
       <%= form.label :second_answer, @next_question %>
-      <%= form.text_field :second_answer %>
+      <%= form.text_field :second_answer, class: 'answer-form' %>
     <% elsif next_question.include?("それをする事で何を得ますか？") || next_question.include?("それをしたら何を失いますか？") %>
       <%= form.label :third_answer, @next_question %>
-      <%= form.text_field :third_answer %>
+      <%= form.text_field :third_answer, class: 'answer-form' %>
     <% end %>
     <%# ボタンのテキストを条件によって変更 %>
     <% final_questions = ["それをする事で何を得ますか？", "それをしたら何を失いますか？", "あと何分休憩しますか？"] %>
