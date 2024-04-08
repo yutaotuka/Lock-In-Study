@@ -40,7 +40,7 @@ document.addEventListener('turbo:load', function() {
           console.error('Audio playback failed:', error);
         });
       }
-    }, 30000); // 30秒ごとに処理を実行
+    }, 2280000); // 38分ごとに処理を実行
   });
 
   stopBtn.addEventListener('click', function() {
