@@ -8,7 +8,41 @@ document.addEventListener('turbo:load', function() {
   var imgBox = document.getElementById('drone-img');
   var studyRecordId;
   var intervalId;  // setIntervalのIDを保存する変数
-  var audio = new Audio('/jingle.mp3');  // 音声ファイルのパスを指定
+  var audio = new Audio('/jingle.mp3');
+  var answerForm = document.getElementById('question_area'); // フォーム要素を取得
+
+
+      if (answerForm) {
+        answerForm.addEventListener('submit', function(event) {
+          var radioGroups = {}; // ラジオボタンのグループを保存するオブジェクト
+          var isValid = true;
+    
+          // ラジオボタンのチェック状態を確認
+          answerForm.querySelectorAll('input[type=radio]').forEach(function(radio) {
+            // グループ名ごとにチェックされた状態を格納
+            if (!radioGroups[radio.name]) {
+              radioGroups[radio.name] = false; // 初期状態は未チェック
+            }
+            if (radio.checked) {
+              radioGroups[radio.name] = true; // いずれかがチェックされていればtrue
+            }
+          });
+    
+          // すべてのラジオボタングループがチェックされているか確認
+          for (var groupName in radioGroups) {
+            if (!radioGroups[groupName]) {
+              isValid = false; // 未チェックのグループがあれば無効
+              break;
+            }
+          }
+    
+          // バリデーションが失敗した場合はフォームの送信を阻止
+          if (!isValid) {
+            event.preventDefault();
+            alert('質問に回答してください。');
+          }
+        });
+      }
 
   
 
@@ -40,7 +74,7 @@ document.addEventListener('turbo:load', function() {
           console.error('Audio playback failed:', error);
         });
       }
-    }, 30000); // 30秒ごとに処理を実行
+    }, 2280000); // 38分ごとに処理を実行
   });
 
   stopBtn.addEventListener('click', function() {

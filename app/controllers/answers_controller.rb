@@ -13,7 +13,7 @@ class AnswersController < ApplicationController
     if @answer.valid?
       if final_question_answered?(@answer)
         @answer.save
-        session.delete(:answers) # セッションをクリア
+        session.delete(:answers)
         p "全部OK"
         render_final_message
       else
@@ -21,7 +21,6 @@ class AnswersController < ApplicationController
         render_next_question_or_final_message
       end
     else
-      # バリデーションエラー時の処理
       p "バリデーションエラー"
       respond_to do |format|
         format.turbo_stream { render turbo_stream: turbo_stream.replace("question_area", partial: "answers/form", locals: { answer: @answer }) }
@@ -71,17 +70,15 @@ class AnswersController < ApplicationController
 
   def final_question_answered?(answer)
     p "final_question_answered?"
-    # ここに最後の質問に対する回答が完了したかどうかを判定するロジックを記述
-    # 例: answer.third_answer.present?
     case answer.first_answer_choice
     when 'study'
-      answer.third_answer.present? # 「勉強」が選ばれた場合、third_answerが最後の質問になるかもしれない
+      answer.third_answer.present? # 「勉強」が選ばれた場合、third_answerが最後の質問になる
     when 'break'
-      answer.second_answer.present? # 「休憩」が選ばれた場合、second_answerが最後の質問になるかもしれない
+      answer.second_answer.present? # 「休憩」が選ばれた場合、second_answerが最後の質問になる
     when 'other'
-      answer.third_answer.present? # 「その他」が選ばれた場合、third_answerが最後の質問になるかもしれない
+      answer.third_answer.present? # 「その他」が選ばれた場合、third_answerが最後の質問になる
     else
-      false # それ以外の場合は、まだ最後の質問に到達していないと見なす
+      false # それ以外の場合は、まだ最後の質問に到達していない
     end
   end
 
