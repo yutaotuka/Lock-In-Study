@@ -1,7 +1,15 @@
 <div class="main-content">
   <%= image_tag "drone.png", width:430, height:240 %>
     <h1>あなたが集中して勉強出来るように<br>サポートします</h1>
-    <button class="try-button"><%= link_to '使ってみる', study_records_path %></button>
+    <% if logged_in? %>
+      <%= button_to '使ってみる', study_records_path, method: :get, class: 'try-button' %>
+    <% else %>
+      <%= button_to '使ってみる', guest_login_path, method: :post, class: 'try-button' %>
+    <% end %>
     <div class="explanation">説明</div>
-    <button class="try-button"><%= link_to '使ってみる', study_records_path %></button>
+    <% if logged_in? %>
+      <%= button_to '使ってみる', study_records_path, method: :get, class: 'try-button' %>
+    <% else %>
+      <%= button_to '使ってみる', guest_login_path, method: :post, class: 'try-button' %>
+    <% end %>
 </div>

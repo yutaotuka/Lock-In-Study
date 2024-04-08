@@ -12,6 +12,9 @@ Rails.application.routes.draw do
   get "login" => "login#login"
   delete 'logout', to: 'setting#destroy', as: 'logout'
 
+  # ゲストログイン
+  post 'guest_login', to: 'login#guest_login'
+
   # get '/study_records' => 'study_records#index'
   resources :study_records, only: [:index] do
     member do

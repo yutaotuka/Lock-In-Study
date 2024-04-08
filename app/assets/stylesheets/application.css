@@ -38,6 +38,12 @@
   font-size: 24px;
 }
 
+.guest-notice {
+  color: #942D2F;
+  font-size: 18px;
+  font-weight: 800;
+}
+
 /* after_login_header */
 .navigation a{
   padding: 0 12px;
@@ -97,6 +103,11 @@ h1 {
   font-weight: 800;
   font-size: 24px;
   margin: 20px 20px;
+}
+
+.try-button:hover {
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .explanation {
