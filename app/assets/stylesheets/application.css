@@ -38,6 +38,10 @@
   font-size: 24px;
 }
 
+.guest-notice {
+  color: #942D2F;
+}
+
 /* after_login_header */
 .navigation a{
   padding: 0 12px;
