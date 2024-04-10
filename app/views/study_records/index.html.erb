@@ -3,6 +3,9 @@
   <div id="question_box" style="display: none;">
     <%= render "answers/form", answer: @answer %>
   </div>
+  <div id="study_record">
+    <%= "前回の勉強時間は#{@duration_time}です。" %>
+  </div>
   <%= image_tag "drone.png", width:430, height:240, id: 'drone-img' %>
   <h1><button id="start-btn", class="time_record-button">スタート</button></h1>
   <h1><button id="stop-btn", class="time_record-button">ストップ</button></h1>
