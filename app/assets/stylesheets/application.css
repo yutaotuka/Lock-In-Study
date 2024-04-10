@@ -143,8 +143,13 @@ h1 {
 /* study_record-page */
 .feature {
   text-align: center;
-  padding-top: 300px;
+  padding-top: 200px;
   padding-bottom: 100px;
+}
+
+#study_record {
+  margin-bottom: 120px;
+  font-size: x-large;
 }
 
 .feature .time_record-button {
