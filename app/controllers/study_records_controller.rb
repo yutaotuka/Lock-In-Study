@@ -1,7 +1,7 @@
 class StudyRecordsController < ApplicationController
   def index
     last_study_record = current_user.study_records.last
-    if last_study_record
+    if last_study_record && last_study_record.duration_time
       total_seconds = last_study_record.duration_time
       hours = total_seconds / 3600
       minutes = (total_seconds / 60) % 60
