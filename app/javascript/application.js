@@ -5,7 +5,7 @@ import "controllers"
 document.addEventListener('turbo:load', function() {
   var startBtn = document.getElementById('start-btn');
   var stopBtn = document.getElementById('stop-btn');
-  document.getElementById('study_record');
+  var studyRecord = document.getElementById('study_record');
   var imgBox = document.getElementById('drone-img');
   var studyRecordId;
   var intervalId;  // setIntervalのIDを保存する変数
