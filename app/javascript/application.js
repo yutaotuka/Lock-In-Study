@@ -5,6 +5,7 @@ import "controllers"
 document.addEventListener('turbo:load', function() {
   var startBtn = document.getElementById('start-btn');
   var stopBtn = document.getElementById('stop-btn');
+  document.getElementById('study_record');
   var imgBox = document.getElementById('drone-img');
   var studyRecordId;
   var intervalId;  // setIntervalのIDを保存する変数
@@ -60,6 +61,7 @@ document.addEventListener('turbo:load', function() {
       if (data.success) {
         studyRecordId = data.study_record_id;
         startBtn.style.display = 'none';
+        studyRecord.style.display = 'none';
         stopBtn.style.display = 'inline';
         imgBox.classList.add('animate-img_box');
       }
@@ -90,8 +92,11 @@ document.addEventListener('turbo:load', function() {
       if (data.success) {
         stopBtn.style.display = 'none';
         startBtn.style.display = 'inline';
+        studyRecord.style.display = 'inline';
         imgBox.classList.remove('animate-img_box');
         alert('おつかれさま！！'); 
+        // ページをリロード
+        window.location.reload();
       } else {
         alert('時間測定に失敗しました。');
       }
