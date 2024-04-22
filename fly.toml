@@ -45,4 +45,4 @@ console_command = '/rails/bin/rails console'
   url_prefix = '/'
 
 [env]
-  RAILS_MASTER_KEY = 5e6842caeeb402bfffc01d3592471036
+  RAILS_MASTER_KEY = "5e6842caeeb402bfffc01d3592471036"
