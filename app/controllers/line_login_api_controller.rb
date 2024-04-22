@@ -15,9 +15,7 @@ class LineLoginApiController < ApplicationController
 
     base_authorization_url = 'https://access.line.me/oauth2/v2.1/authorize'
     response_type = 'code'
-    client_id = Rails.applica
-    tion.credentials.line_login[
-    :client_id]
+    client_id = Rails.application.credentials.line_login[:client_id]
     #本番環境では環境変数などに保管する
     redirect_uri = CGI.escape(line_login_api_callback_url)
     state = session[:state]
@@ -89,9 +87,7 @@ class LineLoginApiController < ApplicationController
       options = {
         body: {
           id_token: line_user_id_token,
-          client_id: Rails.applica
-          tion.credentials.line_login[
-          :client_id] # 本番環境では環境変数などに保管
+          client_id: Rails.application.credentials.line_login[:client_id] # 本番環境では環境変数などに保管
         }
       }
 
@@ -137,12 +133,8 @@ class LineLoginApiController < ApplicationController
         grant_type: 'authorization_code',
         code: code,
         redirect_uri: redirect_uri,
-        client_id: Rails.applica
-        tion.credentials.line_login[
-        :client_id], # 本番環境では環境変数などに保管
-        client_secret: Rails.applica
-        tion.credentials.line_login[
-        :client_secret] # 本番環境では環境変数などに保管
+        client_id: Rails.application.credentials.line_login[:client_id], # 本番環境では環境変数などに保管
+        client_secret: Rails.application.credentials.line_login[:client_secret] # 本番環境では環境変数などに保管
       }
     }
   
