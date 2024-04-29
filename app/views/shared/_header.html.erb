@@ -3,7 +3,7 @@
   <nav class="navigation">
     <%= link_to '測定', study_records_path %>
     <%= link_to '記録一覧', '#', class: "unimplement" %>
-    <%= link_to '時間一覧', '#', class: "unimplement" %>
+    <%= link_to '時間一覧', 'study_time/index' %>
     <%= link_to '回答一覧', '#', class: "unimplement" %>
     <%# link_to '設定/ログアウト', '#' %>
     <%= link_to 'ログアウト', logout_path, data: { turbo_method: :delete }  %>
