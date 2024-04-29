@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
+  get "study_time/index" => "study_time#index"
+
   get "login" => "login#login"
   delete 'logout', to: 'setting#destroy', as: 'logout'
 
