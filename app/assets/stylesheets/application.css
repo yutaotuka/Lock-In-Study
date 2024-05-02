@@ -263,7 +263,7 @@ border-radius: 5px;
 }
 /*liにactiveクラスがついた時の形状*/
 .tab li.active a{
-  background:#fff;
+  background:#5fd7df;
 }
 
 
