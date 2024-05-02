@@ -8,43 +8,31 @@
       <canvas id="studyTimeChart" width="800" height="400"></canvas>
     </div>
     <div id="weekly" class="area">
-      <h2>ドリンク</h2>
-      <ul>
-        <li>ウーロン茶</li>
-        <li>オレンジジュース</li>
-        <li>ジンジャーエール</li>
-      </ul>
+      <canvas id="weeklyStudyTimeChart" width="800" height="400"></canvas>
     </div>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/5-4-1/js/5-4-1.js"></script>
-  
+
   <script>
-    // Chart.js スクリプトを動的にロードする関数
     function loadScript(url, callback) {
       var script = document.createElement('script');
       script.type = 'text/javascript';
       script.src = url;
-      script.onload = callback; // スクリプトがロードされた後に実行される関数を設定
-      document.head.appendChild(script); // HTMLの<head>タグの中にスクリプトを追加
+      script.onload = callback;
+      document.head.appendChild(script);
     }
 
-    // Chart.js をロードして、完了したらグラフを初期化する
-    loadScript('https://cdn.jsdelivr.net/npm/chart.js', function() {
-      console.log("Chart.js has been loaded!");
-      initChart(); // グラフを初期化する関数
-    });
-
-    function initChart() {
-      var ctx = document.getElementById('studyTimeChart').getContext('2d');
-      var chart = new Chart(ctx, {
+    function initChart(ctxId, data, labels) {
+      var ctx = document.getElementById(ctxId).getContext('2d');
+      return new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: <%= @daily_totals.keys.map { |date| date.strftime("%Y-%m-%d") }.to_json.html_safe %>,
+          labels: labels,
           datasets: [{
             label: '勉強時間',
-            data: <%= @daily_totals.values.to_json.html_safe %>,
+            data: data,
             backgroundColor: 'rgba(54, 162, 235, 0.2)',
             borderColor: 'rgba(54, 162, 235, 1)',
             borderWidth: 1
@@ -55,7 +43,7 @@
             y: {
               beginAtZero: true,
               ticks: {
-                stepSize: 7200,  // 5 hours in seconds
+                stepSize: 7200,
                 callback: function(value) {
                   var hours = Math.floor(value / 3600);
                   var minutes = Math.floor((value % 3600) / 60);
@@ -81,5 +69,19 @@
         }
       });
     }
+
+    loadScript('https://cdn.jsdelivr.net/npm/chart.js', function() {
+      console.log("Chart.js has been loaded!");
+      initChart('studyTimeChart', <%= @daily_totals.values.to_json.html_safe %>, <%= @daily_totals.keys.map { |date| date.strftime("%Y-%m-%d") }.to_json.html_safe %>);
+      initChart('weeklyStudyTimeChart', <%= @weekly_totals.values.to_json.html_safe %>, <%= @weekly_totals.keys.map { |date| date.strftime("%Y-%m-%d") }.to_json.html_safe %>);
+    });
+
+    // タブのクリックイベント
+    $('.tab a').on('click', function() {
+      var idName = $(this).attr('href');
+      $('.area').hide(); // 全部隠す
+      $(idName).show(); // クリックされたタブに対応するエリアを表示
+      return false;
+    });
   </script>
 </body>
