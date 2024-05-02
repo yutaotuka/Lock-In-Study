@@ -1,7 +1,7 @@
 <body>
   <div class="wrapper">
     <ul class="tab">
-      <li><a href="#daily">日</a></li>
+      <li class="active"><a href="#daily">日</a></li>
       <li><a href="#weekly">週</a></li>
     </ul>
     <div id="daily" class="area" style="display:block;">
@@ -14,25 +14,18 @@
 
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/5-4-1/js/5-4-1.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-    $(document).ready(function() {
-      // 初期状態で日のデータを表示
-      $('#daily').show();
-      $('#weekly').hide();
-
-      // タブのクリックイベントハンドラ
-      $('.tab a').on('click', function() {
-        var idName = $(this).attr('href');
-        $('.area').hide(); // 全てのエリアを隠す
-        $(idName).show(); // クリックされたタブに対応するエリアを表示
-        return false; // デフォルトのイベントをキャンセル
-      });
-    });
+    function loadScript(url, callback) {
+      var script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src = url;
+      script.onload = callback;
+      document.head.appendChild(script);
+    }
 
     function initChart(ctxId, data, labels) {
       var ctx = document.getElementById(ctxId).getContext('2d');
-      var chart = new Chart(ctx, {
+      return new Chart(ctx, {
         type: 'bar',
         data: {
           labels: labels,
@@ -75,5 +68,28 @@
         }
       });
     }
+
+    loadScript('https://cdn.jsdelivr.net/npm/chart.js', function() {
+      console.log("Chart.js has been loaded!");
+      initChart('studyTimeChart', <%= @daily_totals.values.to_json.html_safe %>, <%= @daily_totals.keys.map { |date| date.strftime("%Y-%m-%d") }.to_json.html_safe %>);
+      initChart('weeklyStudyTimeChart', <%= @weekly_totals.values.to_json.html_safe %>, <%= @weekly_totals.keys.map { |date| date.strftime("%Y-%m-%d") }.to_json.html_safe %>);
+    });
+
+    // タブのクリックイベント
+    $('.tab a').on('click', function() {
+      var idName = $(this).attr('href');
+      $('.tab li').removeClass('active'); // Remove active from all tabs
+      $(this).parent().addClass('active'); // Set this tab to active
+      $('.area').hide(); // Hide all areas
+      $(idName).show(); // Show the selected area
+      return false; // Prevent default
+    });
+
+    $(document).ready(function() {
+      // Set initial visibility on page load
+      $('#daily').show();
+      $('#weekly').hide();
+    });
   </script>
 </body>
+
