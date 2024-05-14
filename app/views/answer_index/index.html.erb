@@ -1,0 +1,17 @@
+<div class="answers">
+<% @answers.each do |answer| %>
+  <div class= "answer">
+    <h4><%= l answer.created_at %></h4>
+    <ul>
+    <li><%= "A1, #{t('enums.answer.first_answer_choice.' + (answer.first_answer_choice || 'default'))}" %></li>
+
+      <li><%= "A2, #{answer.second_answer}" %></li>
+      <% if answer.third_answer %>
+        <li><%= "A3, #{answer.third_answer}" %></li>
+      <% else %>
+        <li>A3, ー</li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+</div>

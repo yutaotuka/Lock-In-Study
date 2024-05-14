@@ -325,3 +325,32 @@ a{
   padding: 10px; 
   border-bottom: 1px solid #ddd;
 }
+
+/* answer_index.index */
+
+.answers {
+  width: 60%;
+  margin: 20px auto;
+}
+
+.answer {
+  margin-bottom: 10px;
+  border-bottom: solid 2px #333;
+}
+
+.answer h4 {
+  margin: 0 0 5px;
+  color: #333;
+}
+
+.answer ul {
+  list-style: none;
+  padding: 0;
+}
+
+.answer li {
+  background-color: #f8f8f8;
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 2px;
+}
