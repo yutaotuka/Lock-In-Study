@@ -21,6 +21,23 @@
       </div>
       <% end %>
     </div>
+    <div id="weekly" class="answers area">
+    <% @answers_weekly.each do |answer| %>
+      <div class= "answer">
+        <h4><%= l answer.created_at %></h4>
+        <ul>
+        <li><%= "A1, #{t('enums.answer.first_answer_choice.' + (answer.first_answer_choice || 'default'))}" %></li>
+
+          <li><%= "A2, #{answer.second_answer}" %></li>
+          <% if answer.third_answer %>
+            <li><%= "A3, #{answer.third_answer}" %></li>
+          <% else %>
+            <li>A3, ー</li>
+          <% end %>
+        </ul>
+      </div>
+      <% end %>
+    </div>
   </div>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/5-4-1/js/5-4-1.js"></script>
