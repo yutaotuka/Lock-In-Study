@@ -148,3 +148,140 @@ $(window).on('load', function () {
   var hashName = location.hash; //リンク元の指定されたURLのハッシュタグを取得
   GethashID (hashName);//設定したタブの読み込み
 });
+
+// common.js
+
+import "@hotwired/turbo-rails";
+import "controllers";
+
+document.addEventListener('turbo:load', function() {
+  // Study Time Chart Initialization
+  function initStudyTimeChart() {
+    if (document.getElementById('studyTimeChart')) {
+      var dailyData = JSON.parse('<%= raw @daily_totals.values.to_json.html_safe %>');
+      var dailyLabels = JSON.parse('<%= @daily_totals.keys.map { |date| date.strftime("%Y-%m-%d") }.to_json.html_safe %>');
+      initChart('studyTimeChart', dailyData, dailyLabels);
+    }
+  }
+
+  // Weekly Study Time Chart Initialization
+  function initWeeklyStudyTimeChart() {
+    if (document.getElementById('weeklyStudyTimeChart')) {
+      var weeklyData = JSON.parse('<%= raw @weekly_totals.values.to_json.html_safe %>');
+      var weeklyLabels = JSON.parse('<%= @weekly_totals.keys.map { |date| date.strftime("%Y-%m-%d") }.to_json.html_safe %>');
+      initChart('weeklyStudyTimeChart', weeklyData, weeklyLabels);
+    }
+  }
+
+  // Answer Index Chart Initialization
+  function initDailyChart() {
+    if (document.getElementById('dailyChart')) {
+      var dailyData = JSON.parse('<%= raw @daily_data_json %>');
+      var labels = Object.keys(dailyData);
+      var studyData = [];
+      var breakData = [];
+      var otherData = [];
+
+      labels.forEach(function(date) {
+        studyData.push(dailyData[date].study);
+        breakData.push(dailyData[date].break);
+        otherData.push(dailyData[date].other);
+      });
+
+      var ctx = document.getElementById('dailyChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: '勉強',
+              data: studyData,
+              borderColor: 'rgba(75, 192, 192, 1)',
+              borderWidth: 1
+            },
+            {
+              label: '休憩',
+              data: breakData,
+              borderColor: 'rgba(255, 159, 64, 1)',
+              borderWidth: 1
+            },
+            {
+              label: 'その他',
+              data: otherData,
+              borderColor: 'rgba(153, 102, 255, 1)',
+              borderWidth: 1
+            }
+          ]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
+  }
+
+  function initWeeklyChart() {
+    if (document.getElementById('weeklyChart')) {
+      var weeklyData = JSON.parse('<%= raw @weekly_data_json %>');
+      var labels = Object.keys(weeklyData);
+      var studyData = [];
+      var breakData = [];
+      var otherData = [];
+
+      labels.forEach(function(week) {
+        studyData.push(weeklyData[week].study);
+        breakData.push(weeklyData[week].break);
+        otherData.push(weeklyData[week].other);
+      });
+
+      var ctx = document.getElementById('weeklyChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: '勉強',
+              data: studyData,
+              backgroundColor: 'rgba(75, 192, 192, 0.2)',
+              borderColor: 'rgba(75, 192, 192, 1)',
+              borderWidth: 1
+            },
+            {
+              label: '休憩',
+              data: breakData,
+              backgroundColor: 'rgba(255, 159, 64, 0.2)',
+              borderColor: 'rgba(255, 159, 64, 1)',
+              borderWidth: 1
+            },
+            {
+              label: 'その他',
+              data: otherData,
+              backgroundColor: 'rgba(153, 102, 255, 0.2)',
+              borderColor: 'rgba(153, 102, 255, 1)',
+              borderWidth: 1
+            }
+          ]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
+  }
+
+  // Initialize all charts
+  initStudyTimeChart();
+  initWeeklyStudyTimeChart();
+  initDailyChart();
+  initWeeklyChart();
+});
