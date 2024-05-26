@@ -59,7 +59,7 @@
     });
 
     // Chart.jsを使ったグラフ描画
-    function initDailyChart() {
+    document.addEventListener('turbo:load',function() { {
       var dailyData = JSON.parse('<%= raw @daily_data_json %>');
 
       var labels = Object.keys(dailyData);
@@ -161,9 +161,6 @@
         }
       });
     }
-
-    document.addEventListener('turbo:load', function() {
-      initDailyChart(); // 初期表示でdailyChartを初期化
-    });
+});
   </script>
 </body>
