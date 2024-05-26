@@ -1,4 +1,3 @@
-// Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
 import "@hotwired/turbo-rails"
 import "controllers"
 
@@ -13,6 +12,71 @@ document.addEventListener('turbo:load', function() {
   var intervalId;  // setIntervalのIDを保存する変数
   var audio = new Audio('/jingle.mp3');
   var answerForm = document.getElementById('question_area'); // フォーム要素を取得
+
+  if (startBtn) {
+    startBtn.addEventListener('click', function() {
+      console.log("Start button clicked!"); 
+      fetch('/study_records/start', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          studyRecordId = data.study_record_id;
+          startBtn.style.display = 'none';
+          studyRecord.style.display = 'none';
+          stopBtn.style.display = 'inline';
+          imgBox.classList.add('animate-img_box');
+        }
+      });
+
+      intervalId = setInterval(function() {
+        var questionBox = document.getElementById("question_box");
+        if (questionBox.style.display === "none") {
+          questionBox.style.display = "block";
+          // 音を再生
+          audio.play().catch(function(error) {
+            console.error('Audio playback failed:', error);
+          });
+        }
+      }, 300000); // 5分＝300000
+    });
+  } else {
+    console.warn('Start button not found');
+  }
+
+  if (stopBtn) {
+    stopBtn.addEventListener('click', function() {
+      fetch(`/study_records/${studyRecordId}/stop`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          stopBtn.style.display = 'none';
+          startBtn.style.display = 'inline';
+          studyRecord.style.display = 'inline';
+          imgBox.classList.remove('animate-img_box');
+          alert('おつかれさま！！'); 
+          // ページをリロード
+          window.location.reload();
+        } else {
+          alert('時間測定に失敗しました。');
+        }
+      });
+      clearInterval(intervalId);
+    });
+  } else {
+    console.warn('Stop button not found');
+  }
 
   if (answerForm) {
     answerForm.addEventListener('submit', function(event) {
@@ -44,69 +108,16 @@ document.addEventListener('turbo:load', function() {
         alert('質問に回答してください。');
       }
     });
+  } else {
+    console.warn('Answer form not found');
   }
-
-  startBtn.addEventListener('click', function() {
-    console.log("Start button clicked!"); 
-    fetch('/study_records/start', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content
-      }
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        studyRecordId = data.study_record_id;
-        startBtn.style.display = 'none';
-        studyRecord.style.display = 'none';
-        stopBtn.style.display = 'inline';
-        imgBox.classList.add('animate-img_box');
-      }
-    });
-
-    intervalId = setInterval(function() {
-      var questionBox = document.getElementById("question_box");
-      if (questionBox.style.display === "none") {
-        questionBox.style.display = "block";
-        // 音を再生
-        audio.play().catch(function(error) {
-          console.error('Audio playback failed:', error);
-        });
-      }
-    }, 300000); // 5分＝300000
-  });
-
-  stopBtn.addEventListener('click', function() {
-    fetch(`/study_records/${studyRecordId}/stop`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content
-      }
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        stopBtn.style.display = 'none';
-        startBtn.style.display = 'inline';
-        studyRecord.style.display = 'inline';
-        imgBox.classList.remove('animate-img_box');
-        alert('おつかれさま！！'); 
-        // ページをリロード
-        window.location.reload();
-      } else {
-        alert('時間測定に失敗しました。');
-      }
-    });
-    clearInterval(intervalId);
-  });
 
   document.addEventListener('form-completed', function() {
     var questionBox = document.getElementById("question_box");
     if (questionBox) {
       questionBox.style.display = "none";
+    } else {
+      console.warn('Question box not found');
     }
   });
 
@@ -230,29 +241,7 @@ document.addEventListener('turbo:load', function() {
         otherData.push(dailyData[date].other);
       });
 
-      initChart('dailyChart', {
-        labels: labels,
-        datasets: [
-          {
-            label: '勉強',
-            data: studyData,
-            borderColor: 'rgba(75, 192, 192, 1)',
-            borderWidth: 1
-          },
-          {
-            label: '休憩',
-            data: breakData,
-            borderColor: 'rgba(255, 159, 64, 1)',
-            borderWidth: 1
-          },
-          {
-            label: 'その他',
-            data: otherData,
-            borderColor: 'rgba(153, 102, 255, 1)',
-            borderWidth: 1
-          }
-        ]
-      }, 'line');
+      initChart('dailyChart', studyData, labels, 'line');
     } catch (error) {
       console.error('Error initializing daily answer chart:', error);
     }
@@ -273,32 +262,7 @@ document.addEventListener('turbo:load', function() {
         otherData.push(weeklyData[week].other);
       });
 
-      initChart('weeklyChart', {
-        labels: labels,
-        datasets: [
-          {
-            label: '勉強',
-            data: studyData,
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            borderColor: 'rgba(75, 192, 192, 1)',
-            borderWidth: 1
-          },
-          {
-            label: '休憩',
-            data: breakData,
-            backgroundColor: 'rgba(255, 159, 64, 0.2)',
-            borderColor: 'rgba(255, 159, 64, 1)',
-            borderWidth: 1
-          },
-          {
-            label: 'その他',
-            data: otherData,
-            backgroundColor: 'rgba(153, 102, 255, 0.2)',
-            borderColor: 'rgba(153, 102, 255, 1)',
-            borderWidth: 1
-          }
-        ]
-      }, 'bar');
+      initChart('weeklyChart', studyData, labels, 'bar');
     } catch (error) {
       console.error('Error initializing weekly answer chart:', error);
     }
