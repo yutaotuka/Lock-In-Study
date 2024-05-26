@@ -142,8 +142,14 @@ document.addEventListener('turbo:load', function() {
 
   // Function to initialize a chart
   function initChart(ctxId, data, labels, chartType = 'bar') {
-    var ctx = document.getElementById(ctxId).getContext('2d');
-    return new Chart(ctx, {
+    console.log(`Initializing chart: ${ctxId}`);
+    var ctx = document.getElementById(ctxId);
+    if (!ctx) {
+      console.error(`Canvas context not found for: ${ctxId}`);
+      return;
+    }
+    ctx = ctx.getContext('2d');
+    new Chart(ctx, {
       type: chartType,
       data: {
         labels: labels,
@@ -189,36 +195,42 @@ document.addEventListener('turbo:load', function() {
 
   // Initialize study time chart
   if (document.getElementById('studyTimeChart')) {
-    var dailyData = JSON.parse(document.getElementById('daily-data').textContent);
-    var dailyLabels = JSON.parse(document.getElementById('daily-labels').textContent);
-    initChart('studyTimeChart', dailyData, dailyLabels);
+    try {
+      var dailyData = JSON.parse(document.getElementById('daily-data').textContent);
+      var dailyLabels = JSON.parse(document.getElementById('daily-labels').textContent);
+      initChart('studyTimeChart', dailyData, dailyLabels);
+    } catch (error) {
+      console.error('Error initializing study time chart:', error);
+    }
   }
 
   // Initialize weekly study time chart
   if (document.getElementById('weeklyStudyTimeChart')) {
-    var weeklyData = JSON.parse(document.getElementById('weekly-data').textContent);
-    var weeklyLabels = JSON.parse(document.getElementById('weekly-labels').textContent);
-    initChart('weeklyStudyTimeChart', weeklyData, weeklyLabels);
+    try {
+      var weeklyData = JSON.parse(document.getElementById('weekly-data').textContent);
+      var weeklyLabels = JSON.parse(document.getElementById('weekly-labels').textContent);
+      initChart('weeklyStudyTimeChart', weeklyData, weeklyLabels);
+    } catch (error) {
+      console.error('Error initializing weekly study time chart:', error);
+    }
   }
 
   // Initialize daily answer chart
   if (document.getElementById('dailyChart')) {
-    var dailyData = JSON.parse(document.getElementById('daily-answer-data').textContent);
-    var labels = Object.keys(dailyData);
-    var studyData = [];
-    var breakData = [];
-    var otherData = [];
+    try {
+      var dailyData = JSON.parse(document.getElementById('daily-answer-data').textContent);
+      var labels = Object.keys(dailyData);
+      var studyData = [];
+      var breakData = [];
+      var otherData = [];
 
-    labels.forEach(function(date) {
-      studyData.push(dailyData[date].study);
-      breakData.push(dailyData[date].break);
-      otherData.push(dailyData[date].other);
-    });
+      labels.forEach(function(date) {
+        studyData.push(dailyData[date].study);
+        breakData.push(dailyData[date].break);
+        otherData.push(dailyData[date].other);
+      });
 
-    var ctx = document.getElementById('dailyChart').getContext('2d');
-    new Chart(ctx, {
-      type: 'line',
-      data: {
+      initChart('dailyChart', {
         labels: labels,
         datasets: [
           {
@@ -240,35 +252,28 @@ document.addEventListener('turbo:load', function() {
             borderWidth: 1
           }
         ]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
+      }, 'line');
+    } catch (error) {
+      console.error('Error initializing daily answer chart:', error);
+    }
   }
 
   // Initialize weekly answer chart
   if (document.getElementById('weeklyChart')) {
-    var weeklyData = JSON.parse(document.getElementById('weekly-answer-data').textContent);
-    var labels = Object.keys(weeklyData);
-    var studyData = [];
-    var breakData = [];
-    var otherData = [];
+    try {
+      var weeklyData = JSON.parse(document.getElementById('weekly-answer-data').textContent);
+      var labels = Object.keys(weeklyData);
+      var studyData = [];
+      var breakData = [];
+      var otherData = [];
 
-    labels.forEach(function(week) {
-      studyData.push(weeklyData[week].study);
-      breakData.push(weeklyData[week].break);
-      otherData.push(weeklyData[week].other);
-    });
+      labels.forEach(function(week) {
+        studyData.push(weeklyData[week].study);
+        breakData.push(weeklyData[week].break);
+        otherData.push(weeklyData[week].other);
+      });
 
-    var ctx = document.getElementById('weeklyChart').getContext('2d');
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
+      initChart('weeklyChart', {
         labels: labels,
         datasets: [
           {
@@ -293,14 +298,9 @@ document.addEventListener('turbo:load', function() {
             borderWidth: 1
           }
         ]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
+      }, 'bar');
+    } catch (error) {
+      console.error('Error initializing weekly answer chart:', error);
+    }
   }
 });
