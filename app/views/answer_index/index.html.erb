@@ -1,54 +1,106 @@
 <body>
-  <div class= "wrapper">
+  <div class="wrapper">
     <ul class="tab">
       <li class="active"><a href="#daily">日</a></li>
       <li><a href="#weekly">週</a></li>
     </ul>
     <div id="daily" class="answers area is-active">
-    <% @answers.each do |answer| %>
-      <div class= "answer">
-        <h4><%= l answer.created_at %></h4>
-        <ul>
-        <li><%= "A1, #{t('enums.answer.first_answer_choice.' + (answer.first_answer_choice || 'default'))}" %></li>
-
-          <li><%= "A2, #{answer.second_answer}" %></li>
-          <% if answer.third_answer %>
-            <li><%= "A3, #{answer.third_answer}" %></li>
-          <% else %>
-            <li>A3, ー</li>
-          <% end %>
-        </ul>
-      </div>
+      <canvas id="dailyChart"></canvas>
+      <% @answers.each do |answer| %>
+        <div class="answer">
+          <h4><%= l answer.created_at %></h4>
+          <ul>
+            <li><%= "A1, #{t('enums.answer.first_answer_choice.' + (answer.first_answer_choice || 'default'))}" %></li>
+            <li><%= "A2, #{answer.second_answer}" %></li>
+            <% if answer.third_answer %>
+              <li><%= "A3, #{answer.third_answer}" %></li>
+            <% else %>
+              <li>A3, ー</li>
+            <% end %>
+          </ul>
+        </div>
       <% end %>
     </div>
     <div id="weekly" class="answers area">
-    <% @answers_weekly.each do |answer| %>
-      <div class= "answer">
-        <h4><%= l answer.created_at %></h4>
-        <ul>
-        <li><%= "A1, #{t('enums.answer.first_answer_choice.' + (answer.first_answer_choice || 'default'))}" %></li>
-
-          <li><%= "A2, #{answer.second_answer}" %></li>
-          <% if answer.third_answer %>
-            <li><%= "A3, #{answer.third_answer}" %></li>
-          <% else %>
-            <li>A3, ー</li>
-          <% end %>
-        </ul>
-      </div>
+      <% @answers_weekly.each do |answer| %>
+        <div class="answer">
+          <h4><%= l answer.created_at %></h4>
+          <ul>
+            <li><%= "A1, #{t('enums.answer.first_answer_choice.' + (answer.first_answer_choice || 'default'))}" %></li>
+            <li><%= "A2, #{answer.second_answer}" %></li>
+            <% if answer.third_answer %>
+              <li><%= "A3, #{answer.third_answer}" %></li>
+            <% else %>
+              <li>A3, ー</li>
+            <% end %>
+          </ul>
+        </div>
       <% end %>
     </div>
   </div>
+
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/5-4-1/js/5-4-1.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <script>
-  //タグのクリックイベント
-  $('.tab a').on('click', function() {
-    var idName = $(this).attr('href');
-    $('.area').hide(); // 全部隠す
-    $(idName).show(); // クリックされたタブに対応するエリアを表示
-    return false;
-  });
+    // タグのクリックイベント
+    $('.tab a').on('click', function() {
+      var idName = $(this).attr('href');
+      $('.area').hide(); // 全部隠す
+      $(idName).show(); // クリックされたタブに対応するエリアを表示
+      return false;
+    });
+
+    // Chart.jsを使ったグラフ描画
+    document.addEventListener('DOMContentLoaded', function() {
+      var dailyData = JSON.parse('<%= raw @daily_data_json %>');
+
+      var labels = Object.keys(dailyData);
+      var studyData = [];
+      var breakData = [];
+      var otherData = [];
+
+      labels.forEach(function(date) {
+        studyData.push(dailyData[date].study);
+        breakData.push(dailyData[date].break);
+        otherData.push(dailyData[date].other);
+      });
+
+      var ctx = document.getElementById('dailyChart').getContext('2d');
+      var dailyChart = new Chart(ctx, {
+        type: 'line', // グラフの種類（例： 'line', 'bar' など）
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Study',
+              data: studyData,
+              borderColor: 'rgba(75, 192, 192, 1)',
+              borderWidth: 1
+            },
+            {
+              label: 'Break',
+              data: breakData,
+              borderColor: 'rgba(255, 159, 64, 1)',
+              borderWidth: 1
+            },
+            {
+              label: 'Other',
+              data: otherData,
+              borderColor: 'rgba(153, 102, 255, 1)',
+              borderWidth: 1
+            }
+          ]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    });
   </script>
 </body>
