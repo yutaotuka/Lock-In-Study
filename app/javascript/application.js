@@ -3,6 +3,8 @@ import "@hotwired/turbo-rails"
 import "controllers"
 
 document.addEventListener('turbo:load', function() {
+  console.log('turbo:load event fired');
+
   var startBtn = document.getElementById('start-btn');
   var stopBtn = document.getElementById('stop-btn');
   var studyRecord = document.getElementById('study_record');
@@ -12,40 +14,37 @@ document.addEventListener('turbo:load', function() {
   var audio = new Audio('/jingle.mp3');
   var answerForm = document.getElementById('question_area'); // フォーム要素を取得
 
+  if (answerForm) {
+    answerForm.addEventListener('submit', function(event) {
+      var radioGroups = {}; // ラジオボタンのグループを保存するオブジェクト
+      var isValid = true;
 
-      if (answerForm) {
-        answerForm.addEventListener('submit', function(event) {
-          var radioGroups = {}; // ラジオボタンのグループを保存するオブジェクト
-          var isValid = true;
-    
-          // ラジオボタンのチェック状態を確認
-          answerForm.querySelectorAll('input[type=radio]').forEach(function(radio) {
-            // グループ名ごとにチェックされた状態を格納
-            if (!radioGroups[radio.name]) {
-              radioGroups[radio.name] = false; // 初期状態は未チェック
-            }
-            if (radio.checked) {
-              radioGroups[radio.name] = true; // いずれかがチェックされていればtrue
-            }
-          });
-    
-          // すべてのラジオボタングループがチェックされているか確認
-          for (var groupName in radioGroups) {
-            if (!radioGroups[groupName]) {
-              isValid = false; // 未チェックのグループがあれば無効
-              break;
-            }
-          }
-    
-          // バリデーションが失敗した場合はフォームの送信を阻止
-          if (!isValid) {
-            event.preventDefault();
-            alert('質問に回答してください。');
-          }
-        });
+      // ラジオボタンのチェック状態を確認
+      answerForm.querySelectorAll('input[type=radio]').forEach(function(radio) {
+        // グループ名ごとにチェックされた状態を格納
+        if (!radioGroups[radio.name]) {
+          radioGroups[radio.name] = false; // 初期状態は未チェック
+        }
+        if (radio.checked) {
+          radioGroups[radio.name] = true; // いずれかがチェックされていればtrue
+        }
+      });
+
+      // すべてのラジオボタングループがチェックされているか確認
+      for (var groupName in radioGroups) {
+        if (!radioGroups[groupName]) {
+          isValid = false; // 未チェックのグループがあれば無効
+          break;
+        }
       }
 
-  
+      // バリデーションが失敗した場合はフォームの送信を阻止
+      if (!isValid) {
+        event.preventDefault();
+        alert('質問に回答してください。');
+      }
+    });
+  }
 
   startBtn.addEventListener('click', function() {
     console.log("Start button clicked!"); 
@@ -76,7 +75,7 @@ document.addEventListener('turbo:load', function() {
           console.error('Audio playback failed:', error);
         });
       }
-    }, 300000); // 1分＝60000
+    }, 300000); // 5分＝300000
   });
 
   stopBtn.addEventListener('click', function() {
@@ -103,58 +102,44 @@ document.addEventListener('turbo:load', function() {
     });
     clearInterval(intervalId);
   });
-});
 
-// フォームの回答が終わったら非表示にする
-// _final_messageで着火させてる
-document.addEventListener('form-completed', function() {
-  var questionBox = document.getElementById("question_box");
-  if (questionBox) {
-    questionBox.style.display = "none";
+  document.addEventListener('form-completed', function() {
+    var questionBox = document.getElementById("question_box");
+    if (questionBox) {
+      questionBox.style.display = "none";
+    }
+  });
+
+  function GethashID (hashIDName){
+    if(hashIDName){
+      //タブ設定
+      $('.tab li').find('a').each(function() { //タブ内のaタグ全てを取得
+        var idName = $(this).attr('href'); //タブ内のaタグのリンク名（例）#lunchの値を取得 
+        if(idName == hashIDName){ //リンク元の指定されたURLのハッシュタグ（例）http://example.com/#lunch←この#の値とタブ内のリンク名（例）#lunchが同じかをチェック
+          var parentElm = $(this).parent(); //タブ内のaタグの親要素（li）を取得
+          $('.tab li').removeClass("active"); //タブ内のliについているactiveクラスを取り除き
+          $(parentElm).addClass("active"); //リンク元の指定されたURLのハッシュタグとタブ内のリンク名が同じであれば、liにactiveクラスを追加
+          //表示させるエリア設定
+          $(".area").removeClass("is-active"); //もともとついているis-activeクラスを取り除き
+          $(hashIDName).addClass("is-active"); //表示させたいエリアのタブリンク名をクリックしたら、表示エリアにis-activeクラスを追加 
+        }
+      });
+    }
   }
-});
 
-// study_time_index
-//任意のタブにURLからリンクするための設定
-function GethashID (hashIDName){
-  if(hashIDName){
-    //タブ設定
-    $('.tab li').find('a').each(function() { //タブ内のaタグ全てを取得
-      var idName = $(this).attr('href'); //タブ内のaタグのリンク名（例）#lunchの値を取得 
-      if(idName == hashIDName){ //リンク元の指定されたURLのハッシュタグ（例）http://example.com/#lunch←この#の値とタブ内のリンク名（例）#lunchが同じかをチェック
-        var parentElm = $(this).parent(); //タブ内のaタグの親要素（li）を取得
-        $('.tab li').removeClass("active"); //タブ内のliについているactiveクラスを取り除き
-        $(parentElm).addClass("active"); //リンク元の指定されたURLのハッシュタグとタブ内のリンク名が同じであれば、liにactiveクラスを追加
-        //表示させるエリア設定
-        $(".area").removeClass("is-active"); //もともとついているis-activeクラスを取り除き
-        $(hashIDName).addClass("is-active"); //表示させたいエリアのタブリンク名をクリックしたら、表示エリアにis-activeクラスを追加 
-      }
-    });
-  }
-}
+  $('.tab a').on('click', function() {
+    var idName = $(this).attr('href'); //タブ内のリンク名を取得  
+    GethashID (idName);//設定したタブの読み込みと
+    return false;//aタグを無効にする
+  });
 
-//タブをクリックしたら
-$('.tab a').on('click', function() {
-  var idName = $(this).attr('href'); //タブ内のリンク名を取得  
-  GethashID (idName);//設定したタブの読み込みと
-  return false;//aタグを無効にする
-});
-
-
-// 上記の動きをページが読み込まれたらすぐに動かす
-$(window).on('load', function () {
+  $(window).on('load', function () {
     $('.tab li:first-of-type').addClass("active"); //最初のliにactiveクラスを追加
     $('.area:first-of-type').addClass("is-active"); //最初の.areaにis-activeクラスを追加
-  var hashName = location.hash; //リンク元の指定されたURLのハッシュタグを取得
-  GethashID (hashName);//設定したタブの読み込み
-});
+    var hashName = location.hash; //リンク元の指定されたURLのハッシュタグを取得
+    GethashID (hashName);//設定したタブの読み込み
+  });
 
-// common.js
-
-import "@hotwired/turbo-rails";
-import "controllers";
-
-document.addEventListener('turbo:load', function() {
   // Function to initialize a chart
   function initChart(ctxId, data, labels, chartType = 'bar') {
     var ctx = document.getElementById(ctxId).getContext('2d');
