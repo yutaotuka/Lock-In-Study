@@ -143,7 +143,7 @@ h1 {
 /* study_record-page */
 .feature {
   text-align: center;
-  padding-top: 200px;
+  padding-top: 50px;
   padding-bottom: 100px;
 }
 
@@ -313,7 +313,8 @@ a{
   width:100%;
   max-width: 960px;
   margin:30px auto;
-    background:#fefefe;
+  margin-bottom: 100px;
+  background:#fefefe;
 }
 
 .area h2{
@@ -324,4 +325,34 @@ a{
 .area li{
   padding: 10px; 
   border-bottom: 1px solid #ddd;
+}
+
+/* answer_index.index */
+
+.answers {
+  width: 60%;
+  margin: 20px auto;
+  margin-bottom: 150px;
+}
+
+.answer {
+  margin-bottom: 10px;
+  border-bottom: solid 2px #333;
+}
+
+.answer h4 {
+  margin: 0 0 5px;
+  color: #333;
+}
+
+.answer ul {
+  list-style: none;
+  padding: 0;
+}
+
+.answer li {
+  background-color: #f8f8f8;
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 2px;
 }

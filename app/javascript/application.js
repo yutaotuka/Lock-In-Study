@@ -76,7 +76,7 @@ document.addEventListener('turbo:load', function() {
           console.error('Audio playback failed:', error);
         });
       }
-    }, 2280000); // 38分ごとに処理を実行
+    }, 300000); // 1分＝60000
   });
 
   stopBtn.addEventListener('click', function() {

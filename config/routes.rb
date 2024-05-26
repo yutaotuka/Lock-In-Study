@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   get "study_time/index" => "study_time#index"
+  get 'answer_index/index' => 'answer_index#index'
 
   get "login" => "login#login"
   delete 'logout', to: 'setting#destroy', as: 'logout'

@@ -5,3 +5,7 @@ ja:
         study: 勉強
         break: 休憩
         other: その他
+        default: "未回答"
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M"
