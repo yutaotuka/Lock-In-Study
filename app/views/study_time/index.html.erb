@@ -6,14 +6,18 @@
     </ul>
     <div id="daily" class="area is-active">
       <canvas id="studyTimeChart" width="800" height="400"></canvas>
+      <div id="daily-data" style="display:none;"><%= raw @daily_totals.values.to_json.html_safe %></div>
+      <div id="daily-labels" style="display:none;"><%= @daily_totals.keys.map { |date| date.strftime("%Y-%m-%d") }.to_json.html_safe %></div>
     </div>
     <div id="weekly" class="area">
       <canvas id="weeklyStudyTimeChart" width="800" height="400"></canvas>
+      <div id="weekly-data" style="display:none;"><%= raw @weekly_totals.values.to_json.html_safe %></div>
+      <div id="weekly-labels" style="display:none;"><%= @weekly_totals.keys.map { |date| date.strftime("%Y-%m-%d") }.to_json.html_safe %></div>
     </div>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/5-4-1/js/5-4-1.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="/app/javascript/application.js"></script> <!-- ここにcommon.jsのパスを追加 -->
+  <script src="/app/javascript/application.js"></script>
 </body>

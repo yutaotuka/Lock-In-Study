@@ -6,6 +6,7 @@
     </ul>
     <div id="daily" class="answers area is-active">
       <canvas id="dailyChart"></canvas>
+      <div id="daily-answer-data" style="display:none;"><%= raw @daily_data_json %></div>
       <% @answers.each do |answer| %>
         <div class="answer">
           <h4><%= l answer.created_at %></h4>
@@ -23,6 +24,7 @@
     </div>
     <div id="weekly" class="answers area">
       <canvas id="weeklyChart"></canvas>
+      <div id="weekly-answer-data" style="display:none;"><%= raw @weekly_data_json %></div>
       <% @answers_weekly.each do |answer| %>
         <div class="answer">
           <h4><%= l answer.created_at %></h4>
@@ -43,5 +45,5 @@
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/5-4-1/js/5-4-1.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="/app/javascript/application.js"></script> <!-- ここにcommon.jsのパスを追加 -->
+  <script src="/app/javascript/application.js"></script>
 </body>

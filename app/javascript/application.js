@@ -155,133 +155,167 @@ import "@hotwired/turbo-rails";
 import "controllers";
 
 document.addEventListener('turbo:load', function() {
-  // Study Time Chart Initialization
-  function initStudyTimeChart() {
-    if (document.getElementById('studyTimeChart')) {
-      var dailyData = JSON.parse('<%= raw @daily_totals.values.to_json.html_safe %>');
-      var dailyLabels = JSON.parse('<%= @daily_totals.keys.map { |date| date.strftime("%Y-%m-%d") }.to_json.html_safe %>');
-      initChart('studyTimeChart', dailyData, dailyLabels);
-    }
-  }
-
-  // Weekly Study Time Chart Initialization
-  function initWeeklyStudyTimeChart() {
-    if (document.getElementById('weeklyStudyTimeChart')) {
-      var weeklyData = JSON.parse('<%= raw @weekly_totals.values.to_json.html_safe %>');
-      var weeklyLabels = JSON.parse('<%= @weekly_totals.keys.map { |date| date.strftime("%Y-%m-%d") }.to_json.html_safe %>');
-      initChart('weeklyStudyTimeChart', weeklyData, weeklyLabels);
-    }
-  }
-
-  // Answer Index Chart Initialization
-  function initDailyChart() {
-    if (document.getElementById('dailyChart')) {
-      var dailyData = JSON.parse('<%= raw @daily_data_json %>');
-      var labels = Object.keys(dailyData);
-      var studyData = [];
-      var breakData = [];
-      var otherData = [];
-
-      labels.forEach(function(date) {
-        studyData.push(dailyData[date].study);
-        breakData.push(dailyData[date].break);
-        otherData.push(dailyData[date].other);
-      });
-
-      var ctx = document.getElementById('dailyChart').getContext('2d');
-      new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: labels,
-          datasets: [
-            {
-              label: '勉強',
-              data: studyData,
-              borderColor: 'rgba(75, 192, 192, 1)',
-              borderWidth: 1
-            },
-            {
-              label: '休憩',
-              data: breakData,
-              borderColor: 'rgba(255, 159, 64, 1)',
-              borderWidth: 1
-            },
-            {
-              label: 'その他',
-              data: otherData,
-              borderColor: 'rgba(153, 102, 255, 1)',
-              borderWidth: 1
+  // Function to initialize a chart
+  function initChart(ctxId, data, labels, chartType = 'bar') {
+    var ctx = document.getElementById(ctxId).getContext('2d');
+    return new Chart(ctx, {
+      type: chartType,
+      data: {
+        labels: labels,
+        datasets: [{
+          label: '勉強時間',
+          data: data,
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 7200,
+              callback: function(value) {
+                var hours = Math.floor(value / 3600);
+                var minutes = Math.floor((value % 3600) / 60);
+                var seconds = value % 60;
+                return `${hours}時間${minutes}分${seconds}秒`;
+              }
             }
-          ]
+          }
         },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                var totalSeconds = context.parsed.y;
+                var hours = Math.floor(totalSeconds / 3600);
+                var minutes = Math.floor((totalSeconds % 3600) / 60);
+                var seconds = totalSeconds % 60;
+                return context.dataset.label + ': ' + hours + '時間 ' + minutes + '分 ' + seconds + '秒';
+              }
             }
           }
         }
-      });
-    }
+      }
+    });
   }
 
-  function initWeeklyChart() {
-    if (document.getElementById('weeklyChart')) {
-      var weeklyData = JSON.parse('<%= raw @weekly_data_json %>');
-      var labels = Object.keys(weeklyData);
-      var studyData = [];
-      var breakData = [];
-      var otherData = [];
+  // Initialize study time chart
+  if (document.getElementById('studyTimeChart')) {
+    var dailyData = JSON.parse(document.getElementById('daily-data').textContent);
+    var dailyLabels = JSON.parse(document.getElementById('daily-labels').textContent);
+    initChart('studyTimeChart', dailyData, dailyLabels);
+  }
 
-      labels.forEach(function(week) {
-        studyData.push(weeklyData[week].study);
-        breakData.push(weeklyData[week].break);
-        otherData.push(weeklyData[week].other);
-      });
+  // Initialize weekly study time chart
+  if (document.getElementById('weeklyStudyTimeChart')) {
+    var weeklyData = JSON.parse(document.getElementById('weekly-data').textContent);
+    var weeklyLabels = JSON.parse(document.getElementById('weekly-labels').textContent);
+    initChart('weeklyStudyTimeChart', weeklyData, weeklyLabels);
+  }
 
-      var ctx = document.getElementById('weeklyChart').getContext('2d');
-      new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: labels,
-          datasets: [
-            {
-              label: '勉強',
-              data: studyData,
-              backgroundColor: 'rgba(75, 192, 192, 0.2)',
-              borderColor: 'rgba(75, 192, 192, 1)',
-              borderWidth: 1
-            },
-            {
-              label: '休憩',
-              data: breakData,
-              backgroundColor: 'rgba(255, 159, 64, 0.2)',
-              borderColor: 'rgba(255, 159, 64, 1)',
-              borderWidth: 1
-            },
-            {
-              label: 'その他',
-              data: otherData,
-              backgroundColor: 'rgba(153, 102, 255, 0.2)',
-              borderColor: 'rgba(153, 102, 255, 1)',
-              borderWidth: 1
-            }
-          ]
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true
-            }
+  // Initialize daily answer chart
+  if (document.getElementById('dailyChart')) {
+    var dailyData = JSON.parse(document.getElementById('daily-answer-data').textContent);
+    var labels = Object.keys(dailyData);
+    var studyData = [];
+    var breakData = [];
+    var otherData = [];
+
+    labels.forEach(function(date) {
+      studyData.push(dailyData[date].study);
+      breakData.push(dailyData[date].break);
+      otherData.push(dailyData[date].other);
+    });
+
+    var ctx = document.getElementById('dailyChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: '勉強',
+            data: studyData,
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          },
+          {
+            label: '休憩',
+            data: breakData,
+            borderColor: 'rgba(255, 159, 64, 1)',
+            borderWidth: 1
+          },
+          {
+            label: 'その他',
+            data: otherData,
+            borderColor: 'rgba(153, 102, 255, 1)',
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
           }
         }
-      });
-    }
+      }
+    });
   }
 
-  // Initialize all charts
-  initStudyTimeChart();
-  initWeeklyStudyTimeChart();
-  initDailyChart();
-  initWeeklyChart();
+  // Initialize weekly answer chart
+  if (document.getElementById('weeklyChart')) {
+    var weeklyData = JSON.parse(document.getElementById('weekly-answer-data').textContent);
+    var labels = Object.keys(weeklyData);
+    var studyData = [];
+    var breakData = [];
+    var otherData = [];
+
+    labels.forEach(function(week) {
+      studyData.push(weeklyData[week].study);
+      breakData.push(weeklyData[week].break);
+      otherData.push(weeklyData[week].other);
+    });
+
+    var ctx = document.getElementById('weeklyChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: '勉強',
+            data: studyData,
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          },
+          {
+            label: '休憩',
+            data: breakData,
+            backgroundColor: 'rgba(255, 159, 64, 0.2)',
+            borderColor: 'rgba(255, 159, 64, 1)',
+            borderWidth: 1
+          },
+          {
+            label: 'その他',
+            data: otherData,
+            backgroundColor: 'rgba(153, 102, 255, 0.2)',
+            borderColor: 'rgba(153, 102, 255, 1)',
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  }
 });
