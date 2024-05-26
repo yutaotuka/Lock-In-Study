@@ -45,11 +45,12 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <script>
-    // タグのクリックイベント
+    // タブのクリックイベント
     $('.tab a').on('click', function() {
       var idName = $(this).attr('href');
-      $('.area').hide(); // 全部隠す
-      $(idName).show(); // クリックされたタブに対応するエリアを表示
+      $('.area').removeClass('is-active'); // 全部のエリアから is-active クラスを削除
+      $(idName).addClass('is-active'); // クリックされたタブに対応するエリアに is-active クラスを追加
+      
       if (idName === '#weekly') {
         initWeeklyChart();
       } else if (idName === '#daily') {
@@ -59,7 +60,7 @@
     });
 
     // Chart.jsを使ったグラフ描画
-    document.addEventListener('turbo:load',function() { {
+    function initDailyChart() {
       var dailyData = JSON.parse('<%= raw @daily_data_json %>');
 
       var labels = Object.keys(dailyData);
@@ -161,6 +162,9 @@
         }
       });
     }
-});
+
+    $(document).ready(function() {
+      initDailyChart(); // 初期表示でdailyChartを初期化
+    });
   </script>
 </body>
