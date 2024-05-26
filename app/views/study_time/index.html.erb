@@ -6,18 +6,82 @@
     </ul>
     <div id="daily" class="area is-active">
       <canvas id="studyTimeChart" width="800" height="400"></canvas>
-      <div id="daily-data" style="display:none;"><%= raw @daily_totals.values.to_json.html_safe %></div>
-      <div id="daily-labels" style="display:none;"><%= @daily_totals.keys.map { |date| date.strftime("%Y-%m-%d") }.to_json.html_safe %></div>
     </div>
     <div id="weekly" class="area">
       <canvas id="weeklyStudyTimeChart" width="800" height="400"></canvas>
-      <div id="weekly-data" style="display:none;"><%= raw @weekly_totals.values.to_json.html_safe %></div>
-      <div id="weekly-labels" style="display:none;"><%= @weekly_totals.keys.map { |date| date.strftime("%Y-%m-%d") }.to_json.html_safe %></div>
     </div>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/5-4-1/js/5-4-1.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="/app/javascript/application.js"></script>
+
+  <script>
+    function loadScript(url, callback) {
+      var script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src = url;
+      script.onload = callback;
+      document.head.appendChild(script);
+    }
+
+    function initChart(ctxId, data, labels) {
+      var ctx = document.getElementById(ctxId).getContext('2d');
+      return new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: '勉強時間',
+            data: data,
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                stepSize: 7200,
+                callback: function(value) {
+                  var hours = Math.floor(value / 3600);
+                  var minutes = Math.floor((value % 3600) / 60);
+                  var seconds = value % 60;
+                  return `${hours}時間${minutes}分${seconds}秒`;
+                }
+              }
+            }
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  var totalSeconds = context.parsed.y;
+                  var hours = Math.floor(totalSeconds / 3600);
+                  var minutes = Math.floor((totalSeconds % 3600) / 60);
+                  var seconds = totalSeconds % 60;
+                  return context.dataset.label + ': ' + hours + '時間 ' + minutes + '分 ' + seconds + '秒';
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    loadScript('https://cdn.jsdelivr.net/npm/chart.js', function() {
+      console.log("Chart.js has been loaded!");
+      initChart('studyTimeChart', <%= @daily_totals.values.to_json.html_safe %>, <%= @daily_totals.keys.map { |date| date.strftime("%Y-%m-%d") }.to_json.html_safe %>);
+      initChart('weeklyStudyTimeChart', <%= @weekly_totals.values.to_json.html_safe %>, <%= @weekly_totals.keys.map { |date| date.strftime("%Y-%m-%d") }.to_json.html_safe %>);
+    });
+
+    // タブのクリックイベント
+    $('.tab a').on('click', function() {
+      var idName = $(this).attr('href');
+      $('.area').hide(); // 全部隠す
+      $(idName).show(); // クリックされたタブに対応するエリアを表示
+      return false;
+    });
+  </script>
 </body>
