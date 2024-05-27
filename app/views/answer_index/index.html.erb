@@ -5,7 +5,7 @@
       <li><a href="#weekly">週</a></li>
     </ul>
     <div id="daily" class="answers area is-active">
-      <canvas id="dailyChart"></canvas>
+      <canvas id="dailyChart" width="800" height="400"></canvas>
       <% @answers.each do |answer| %>
         <div class="answer">
           <h4><%= l answer.created_at %></h4>
@@ -22,7 +22,7 @@
       <% end %>
     </div>
     <div id="weekly" class="answers area">
-      <canvas id="weeklyChart"></canvas>
+      <canvas id="weeklyChart" width="800" height="400"></canvas>
       <% @answers_weekly.each do |answer| %>
         <div class="answer">
           <h4><%= l answer.created_at %></h4>
@@ -156,22 +156,21 @@
       });
     }
 
+    function loadCharts() {
+      initDailyChart();
+      initWeeklyChart();
+    }
+
     document.addEventListener('turbo:load', function() {
       console.log("turbo:load event fired");
-      initDailyChart(); // 初期表示でdailyChartを初期化
-      initWeeklyChart(); // 初期表示でweeklyChartを初期化
+      loadCharts(); // 初期表示で両方のグラフを初期化
 
       // タブのクリックイベント
       $('.tab a').on('click', function() {
         var idName = $(this).attr('href');
         $('.area').hide(); // 全部隠す
         $(idName).show(); // クリックされたタブに対応するエリアを表示
-
-        if (idName === '#daily') {
-          initDailyChart();
-        } else if (idName === '#weekly') {
-          initWeeklyChart();
-        }
+        loadCharts(); // タブを切り替えたときに両方のグラフを再初期化
 
         return false;
       });
