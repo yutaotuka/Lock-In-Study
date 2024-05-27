@@ -46,17 +46,17 @@
 
   <script>
     // タグのクリックイベント
-    $('.tab a').on('click', function() {
-      var idName = $(this).attr('href');
-      $('.area').hide(); // 全部隠す
-      $(idName).show(); // クリックされたタブに対応するエリアを表示
-      if (idName === '#weekly') {
-        initWeeklyChart();
-      } else if (idName === '#daily') {
-        initDailyChart();
-      }
-      return false;
-    });
+    # $('.tab a').on('click', function() {
+    #   var idName = $(this).attr('href');
+    #   $('.area').hide(); // 全部隠す
+    #   $(idName).show(); // クリックされたタブに対応するエリアを表示
+    #   if (idName === '#weekly') {
+    #     initWeeklyChart();
+    #   } else if (idName === '#daily') {
+    #     initDailyChart();
+    #   }
+    #   return false;
+    # });
 
     // Chart.jsを使ったグラフ描画
     function initDailyChart() {
