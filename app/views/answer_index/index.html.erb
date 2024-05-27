@@ -45,10 +45,14 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <script>
-    // Chart.jsを使ったグラフ描画
-    function initDailyChart() {
-      var dailyData = JSON.parse('<%= raw @daily_data_json %>');
+    var dailyChart, weeklyChart;
 
+    function initDailyChart() {
+      if (dailyChart) {
+        dailyChart.destroy();
+      }
+
+      var dailyData = JSON.parse('<%= raw @daily_data_json %>');
       var labels = Object.keys(dailyData);
       var studyData = [];
       var breakData = [];
@@ -61,8 +65,8 @@
       });
 
       var ctx = document.getElementById('dailyChart').getContext('2d');
-      new Chart(ctx, {
-        type: 'line', // グラフの種類（例： 'line', 'bar' など）
+      dailyChart = new Chart(ctx, {
+        type: 'line',
         data: {
           labels: labels,
           datasets: [
@@ -97,8 +101,11 @@
     }
 
     function initWeeklyChart() {
-      var weeklyData = JSON.parse('<%= raw @weekly_data_json %>');
+      if (weeklyChart) {
+        weeklyChart.destroy();
+      }
 
+      var weeklyData = JSON.parse('<%= raw @weekly_data_json %>');
       var labels = Object.keys(weeklyData);
       var studyData = [];
       var breakData = [];
@@ -111,8 +118,8 @@
       });
 
       var ctx = document.getElementById('weeklyChart').getContext('2d');
-      new Chart(ctx, {
-        type: 'bar', // グラフの種類（例： 'line', 'bar' など）
+      weeklyChart = new Chart(ctx, {
+        type: 'bar',
         data: {
           labels: labels,
           datasets: [
@@ -159,6 +166,13 @@
         var idName = $(this).attr('href');
         $('.area').hide(); // 全部隠す
         $(idName).show(); // クリックされたタブに対応するエリアを表示
+
+        if (idName === '#daily') {
+          initDailyChart();
+        } else if (idName === '#weekly') {
+          initWeeklyChart();
+        }
+
         return false;
       });
     });
