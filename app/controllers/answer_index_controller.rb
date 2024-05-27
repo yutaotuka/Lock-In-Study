@@ -1,67 +1,177 @@
-class AnswerIndexController < ApplicationController
-  def index
-    start_date_for_day = 10.days.ago.beginning_of_day
-    end_date = Time.zone.now.end_of_day
-    start_date_for_week = 6.weeks.ago.beginning_of_day
+<body>
+  <div class="wrapper">
+    <ul class="tab">
+      <li class="active"><a href="#answer_daily">日</a></li>
+      <li><a href="#answer_weekly">週</a></li>
+    </ul>
+    <div id="answer_daily" class="answers area is-active">
+      <canvas id="dailyChart" width="800" height="400"></canvas>
+      <% @answers.each do |answer| %>
+        <div class="answer">
+          <h4><%= l answer.created_at %></h4>
+          <ul>
+            <li><%= "A1, #{t('enums.answer.first_answer_choice.' + (answer.first_answer_choice || 'default'))}" %></li>
+            <li><%= "A2, #{answer.second_answer}" %></li>
+            <% if answer.third_answer %>
+              <li><%= "A3, #{answer.third_answer}" %></li>
+            <% else %>
+              <li>A3, ー</li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    </div>
+    <div id="answer_weekly" class="answers area">
+      <canvas id="weeklyChart" width="800" height="400"></canvas>
+      <% @answers_weekly.each do |answer| %>
+        <div class="answer">
+          <h4><%= l answer.created_at %></h4>
+          <ul>
+            <li><%= "A1, #{t('enums.answer.first_answer_choice.' + (answer.first_answer_choice || 'default'))}" %></li>
+            <li><%= "A2, #{answer.second_answer}" %></li>
+            <% if answer.third_answer %>
+              <li><%= "A3, #{answer.third_answer}" %></li>
+            <% else %>
+              <li>A3, ー</li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    </div>
+  </div>
 
-    # 10日間の回答を取得
-    daily_answers = Answer.where(created_at: start_date_for_day..end_date)
-    # 7週間の回答を取得
-    weekly_answers = Answer.where(created_at: start_date_for_week..end_date).order(created_at: :desc)
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/5-4-1/js/5-4-1.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    @answers = daily_answers.order(created_at: :desc)
-    @answers_weekly = weekly_answers
+  <script>
+    var dailyChart, weeklyChart;
 
-    # 過去10日間の日付の配列を生成
-    dates = (start_date_for_day.to_date..end_date.to_date).to_a
+    function initDailyChart() {
+      if (dailyChart) {
+        dailyChart.destroy();
+      }
 
-    # 初期値を持つ日付ごとのデータを生成
-    @daily_data = dates.each_with_object({}) do |date, hash|
-      hash[date] = { study: 0, break: 0, other: 0 }
-    end
+      var dailyData = <%= @daily_data_json.html_safe %>;
+      var labels = Object.keys(dailyData);
+      var studyData = [];
+      var breakData = [];
+      var otherData = [];
 
-    # 過去10日間のデータを集計
-    Answer.select("DATE(created_at) as date, first_answer_choice, COUNT(*) as count")
-          .where(created_at: start_date_for_day..end_date)
-          .group("DATE(created_at), first_answer_choice")
-          .each do |record|
-            date = record.date
-            choice = record.first_answer_choice
-            count = record.count
-            @daily_data[date][choice.to_sym] = count if choice.present?
-          end
+      labels.forEach(function(date) {
+        studyData.push(dailyData[date].study);
+        breakData.push(dailyData[date].break);
+        otherData.push(dailyData[date].other);
+      });
 
-    # 割合を計算
-    @daily_data.transform_values! do |choices|
-      total = choices.values.sum
-      choices.transform_values { |count| total > 0 ? (count.to_f / total * 100).round(2) : 0 }
-    end
+      var ctx = document.getElementById('dailyChart').getContext('2d');
+      dailyChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: '勉強',
+              data: studyData,
+              borderColor: 'rgba(75, 192, 192, 1)',
+              borderWidth: 1
+            },
+            {
+              label: '休憩',
+              data: breakData,
+              borderColor: 'rgba(255, 159, 64, 1)',
+              borderWidth: 1
+            },
+            {
+              label: 'その他',
+              data: otherData,
+              borderColor: 'rgba(153, 102, 255, 1)',
+              borderWidth: 1
+            }
+          ]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
 
-    @daily_data_json = @daily_data.to_json
+    function initWeeklyChart() {
+      if (weeklyChart) {
+        weeklyChart.destroy();
+      }
 
-    # 過去7週間のデータを週ごとに集計
-    @weekly_data = {}
-    (0..6).each do |i|
-      start_of_week = (start_date_for_week + i.weeks).beginning_of_week
-      end_of_week = (start_of_week + 6.days).end_of_day
+      var weeklyData = <%= @weekly_data_json.html_safe %>;
+      var labels = Object.keys(weeklyData);
+      var studyData = [];
+      var breakData = [];
+      var otherData = [];
 
-      week_key = start_of_week.strftime("%m/%d") + "~" + end_of_week.strftime("%m/%d")
-      @weekly_data[week_key] = { study: 0, break: 0, other: 0 }
+      labels.forEach(function(week) {
+        studyData.push(weeklyData[week].study);
+        breakData.push(weeklyData[week].break);
+        otherData.push(weeklyData[week].other);
+      });
 
-      Answer.select("first_answer_choice, COUNT(*) as count")
-            .where(created_at: start_of_week..end_date) # 今週のデータも含めるためにend_dateを使用
-            .group("first_answer_choice")
-            .each do |record|
-              choice = record.first_answer_choice
-              count = record.count
-              @weekly_data[week_key][choice.to_sym] = count if choice.present?
-            end
+      var ctx = document.getElementById('weeklyChart').getContext('2d');
+      weeklyChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: '勉強',
+              data: studyData,
+              backgroundColor: 'rgba(75, 192, 192, 0.2)',
+              borderColor: 'rgba(75, 192, 192, 1)',
+              borderWidth: 1
+            },
+            {
+              label: '休憩',
+              data: breakData,
+              backgroundColor: 'rgba(255, 159, 64, 0.2)',
+              borderColor: 'rgba(255, 159, 64, 1)',
+              borderWidth: 1
+            },
+            {
+              label: 'その他',
+              data: otherData,
+              backgroundColor: 'rgba(153, 102, 255, 0.2)',
+              borderColor: 'rgba(153, 102, 255, 1)',
+              borderWidth: 1
+            }
+          ]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
 
-      # 割合を計算
-      total = @weekly_data[week_key].values.sum
-      @weekly_data[week_key].transform_values! { |count| total > 0 ? (count.to_f / total * 100).round(2) : 0 }
-    end
+    document.addEventListener('turbo:load', function() {
+      initDailyChart();
+      initWeeklyChart();
+    });
 
-    @weekly_data_json = @weekly_data.to_json
-  end
-end
+    // タブのクリックイベント
+    $('.tab a').on('click', function() {
+      var idName = $(this).attr('href');
+      $('.area').hide(); // 全部隠す
+      $(idName).show(); // クリックされたタブに対応するエリアを表示
+      if (idName === '#answer_daily') {
+        initDailyChart();
+      } else if (idName === '#answer_weekly') {
+        initWeeklyChart();
+      }
+      return false;
+    });
+  </script>
+</body>
