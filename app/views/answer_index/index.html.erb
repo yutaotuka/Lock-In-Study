@@ -150,16 +150,17 @@
     }
 
     document.addEventListener('turbo:load', function() {
+      console.log("turbo:load event fired");
       initDailyChart(); // 初期表示でdailyChartを初期化
       initWeeklyChart(); // 初期表示でweeklyChartを初期化
-    });
 
-    // タグのクリックイベント
-    $('.tab a').on('click', function() {
-      var idName = $(this).attr('href');
-      $('.area').hide(); // 全部隠す
-      $(idName).show(); // クリックされたタブに対応するエリアを表示
-      return false;
+      // タブのクリックイベント
+      $('.tab a').on('click', function() {
+        var idName = $(this).attr('href');
+        $('.area').hide(); // 全部隠す
+        $(idName).show(); // クリックされたタブに対応するエリアを表示
+        return false;
+      });
     });
   </script>
 </body>
