@@ -4,7 +4,7 @@
       <li class="active"><a href="#answer_daily">日</a></li>
       <li><a href="#answer_weekly">週</a></li>
     </ul>
-    <div id="daily" class="answers area is-active">
+    <div id="answer_daily" class="answers area is-active">
       <canvas id="dailyChart" width="800" height="400"></canvas>
       <% @answers.each do |answer| %>
         <div class="answer">
@@ -21,7 +21,7 @@
         </div>
       <% end %>
     </div>
-    <div id="weekly" class="answers area">
+    <div id="answer_weekly" class="answers area">
       <canvas id="weeklyChart" width="800" height="400"></canvas>
       <% @answers_weekly.each do |answer| %>
         <div class="answer">
@@ -156,30 +156,29 @@
       });
     }
 
-    $(document).ready(function() {
-      console.log("Document is ready");
+    function loadCharts() {
+      initDailyChart();
+      initWeeklyChart();
+    }
 
-      loadScript('https://cdn.jsdelivr.net/npm/chart.js', function() {
-        console.log("Chart.js has been loaded!");
-        initDailyChart();
-        initWeeklyChart();
-      });
+    document.addEventListener('turbo:load', function() {
+      console.log("turbo:load event fired");
+      loadCharts(); // 初期表示で両方のグラフを初期化
 
       // タブのクリックイベント
       $('.tab a').on('click', function() {
         var idName = $(this).attr('href');
         $('.area').hide(); // 全部隠す
         $(idName).show(); // クリックされたタブに対応するエリアを表示
+
+        if (idName === '#answer_daily') {
+          initDailyChart();
+        } else if (idName === '#answer_weekly') {
+          initWeeklyChart();
+        }
+
         return false;
       });
     });
-
-    function loadScript(url, callback) {
-      var script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.src = url;
-      script.onload = callback;
-      document.head.appendChild(script);
-    }
   </script>
 </body>
