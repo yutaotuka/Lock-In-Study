@@ -45,6 +45,15 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <script>
+  function loadScript(url, callback) {
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = url;
+    script.onload = callback;
+    document.head.appendChild(script);
+  }
+
+
     var dailyChart, weeklyChart;
 
     function initDailyChart() {
@@ -156,22 +165,20 @@
       });
     }
 
-    function loadCharts() {
-      initDailyChart();
-      initWeeklyChart();
-    }
+    $(document).ready(function() {
+      console.log("Document is ready");
 
-    document.addEventListener('turbo:load', function() {
-      console.log("turbo:load event fired");
-      loadCharts(); // 初期表示で両方のグラフを初期化
+      loadScript('https://cdn.jsdelivr.net/npm/chart.js', function() {
+        console.log("Chart.js has been loaded!");
+        initDailyChart();
+        initWeeklyChart();
+      });
 
       // タブのクリックイベント
       $('.tab a').on('click', function() {
         var idName = $(this).attr('href');
         $('.area').hide(); // 全部隠す
         $(idName).show(); // クリックされたタブに対応するエリアを表示
-        loadCharts(); // タブを切り替えたときに両方のグラフを再初期化
-
         return false;
       });
     });
