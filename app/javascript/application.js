@@ -5,6 +5,7 @@ import "controllers"
 document.addEventListener('turbo:load', function() {
   var startBtn = document.getElementById('start-btn');
   var stopBtn = document.getElementById('stop-btn');
+  var header = document.getElementById('header');
   var studyRecord = document.getElementById('study_record');
   var imgBox = document.getElementById('drone-img');
   var studyRecordId;
@@ -62,6 +63,7 @@ document.addEventListener('turbo:load', function() {
         studyRecordId = data.study_record_id;
         startBtn.style.display = 'none';
         studyRecord.style.display = 'none';
+        header.style.display = 'none';
         stopBtn.style.display = 'inline';
         imgBox.classList.add('animate-img_box');
       }
