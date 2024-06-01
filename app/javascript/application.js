@@ -76,7 +76,7 @@ document.addEventListener('turbo:load', function() {
           console.error('Audio playback failed:', error);
         });
       }
-    }, 300000); // 1分＝60000
+    }, 600000); // 1分＝60000
   });
 
   stopBtn.addEventListener('click', function() {
