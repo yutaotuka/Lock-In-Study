@@ -1,6 +1,6 @@
 # Lock-In-Study
 ## サービスURL
-https://lockinstudy.com
+https://www.lockinstudy.com
 ## サービス概要
 Lock In Studyは主に2つの機能があります
 1. 勉強時間の計測。
