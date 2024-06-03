@@ -10,6 +10,7 @@ gem 'typhoeus'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.3", ">= 7.1.3.2"
+gem 'rspec-rails', '~> 5.0.0', group: [:development, :test]
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
