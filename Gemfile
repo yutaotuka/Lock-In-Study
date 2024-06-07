@@ -8,6 +8,9 @@ gem 'rails-i18n', '~> 7.0.0'
 gem 'jwt'
 gem 'typhoeus'
 
+# line_message
+gem 'line-bot-api'
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.3", ">= 7.1.3.2"
 gem 'rspec-rails', '~> 5.0.0', group: [:development, :test]

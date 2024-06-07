@@ -18,6 +18,10 @@ Rails.application.routes.draw do
   # ゲストログイン
   post 'guest_login', to: 'login#guest_login'
 
+  # LINE_message
+  post 'send_custom_message', to: 'messages#send_custom_message'
+
+
   # get '/study_records' => 'study_records#index'
   resources :study_records, only: [:index] do
     member do

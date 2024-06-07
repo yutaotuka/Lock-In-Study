@@ -13,6 +13,7 @@ document.addEventListener('turbo:load', function() {
   var intervalId;  // setIntervalのIDを保存する変数
   var audio = new Audio('/jingle.mp3');
   var answerForm = document.getElementById('question_area'); // フォーム要素を取得
+  var userId = document.querySelector('input[name="user_id"]').value;
 
 
       if (answerForm) {
@@ -79,6 +80,22 @@ document.addEventListener('turbo:load', function() {
         audio.play().catch(function(error) {
           console.error('Audio playback failed:', error);
         });
+        // LINEメッセージを送信
+        fetch('/send_custom_message', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content
+          },
+          body: JSON.stringify({ user_id: userId, message: '質問が表示されました' })
+        }).then(response => response.json())
+          .then(data => {
+            if (data.status === 'success') {
+              console.log('LINEメッセージが送信されました');
+            } else {
+              console.error('LINEメッセージの送信に失敗しました:', data.message);
+            }
+          });
       }
     }, 600000); // 1分＝60000
   });
