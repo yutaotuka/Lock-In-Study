@@ -65,3 +65,4 @@ class AnswerIndexController < ApplicationController
     @weekly_data_json = @weekly_data.to_json
   end
 end
+
