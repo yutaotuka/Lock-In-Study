@@ -1,6 +1,6 @@
 require 'line/bot'
 
-LINE_CLIENT = Line::Bot::Client.new{ |config|
-  config.channel_secret = Rails.application.credentials.line[:channel_secret]
-  config.channel_token = Rails.application.credentials.line[:channel_token]
-}
+LINE_CLIENT = Line::Bot::Client.new do |config|
+  config.channel_secret = ENV['LINE_CHANNEL_SECRET'] || Rails.application.credentials.line[:channel_secret]
+  config.channel_token = ENV['LINE_CHANNEL_TOKEN'] || Rails.application.credentials.line[:channel_token]
+end
