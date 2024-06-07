@@ -1,4 +1,4 @@
-class MessageController < ApplicationController
+class MessagesController < ApplicationController
   def send_custom_message
     user_id = params[:user_id] # LINEのユーザーIDを取得
     message = params[:message] # 送信するメッセージを取得
