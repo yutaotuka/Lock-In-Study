@@ -7,10 +7,9 @@
       <%= button_to '使ってみる', guest_login_path, method: :post, class: 'try-button' %>
     <% end %>
     <div class="explanation">
-      <div class="line-bot-qr">
-        <p>このQRコードを読み込んだらLINEでの通知もできます。</p>
-        <%= image_tag "line-bot-qr.png" %>
-      </div>
+      <% if logged_in? && !current_user.guest? %>
+        <%= render 'shared/line-bot-qr' %>
+      <% end %>
     </div>
     <% if logged_in? %>
       <%= button_to '使ってみる', study_records_path, method: :get, class: 'try-button' %>
