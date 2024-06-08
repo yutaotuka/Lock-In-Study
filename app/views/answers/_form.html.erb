@@ -1,6 +1,7 @@
 <!-- app/views/answers/_form.html.erb -->
 <%= turbo_frame_tag "question_area" do %>
   <%= form_with model: @answer, url: answers_path, method: :post, data: { turbo_frame: "question_area" } do |form| %>
+    <%= form.hidden_field :user_id, value: current_user.line_user_id %>
     <%= form.label :first_answer_choice, "あなたは今何をしていますか？" %><br>
     <%= form.radio_button :first_answer_choice, "study", name: 'answer[first_answer_choice]', class: "form-radio-btn" %>
     <%= form.label :first_answer_choice_study, "勉強", class: "form-radio" %>

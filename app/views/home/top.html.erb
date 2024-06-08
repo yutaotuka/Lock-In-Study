@@ -6,7 +6,11 @@
     <% else %>
       <%= button_to '使ってみる', guest_login_path, method: :post, class: 'try-button' %>
     <% end %>
-    <div class="explanation">説明</div>
+    <div class="explanation">
+      <% if logged_in? && !current_user.guest? %>
+        <%= render 'shared/line-bot-qr' %>
+      <% end %>
+    </div>
     <% if logged_in? %>
       <%= button_to '使ってみる', study_records_path, method: :get, class: 'try-button' %>
     <% else %>
