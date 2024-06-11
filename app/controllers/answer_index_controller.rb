@@ -5,9 +5,9 @@ class AnswerIndexController < ApplicationController
     start_date_for_week = 6.weeks.ago.beginning_of_day
 
     # 10日間の回答を取得
-    daily_answers = Answer.where(created_at: start_date_for_day..end_date)
+    daily_answers = current_user.answers.where(created_at: start_date_for_day..end_date)
     # 7週間の回答を取得
-    weekly_answers = Answer.where(created_at: start_date_for_week..end_date).order(created_at: :desc)
+    weekly_answers = current_user.answers.where(created_at: start_date_for_week..end_date).order(created_at: :desc)
 
     @answers = daily_answers.order(created_at: :desc)
     @answers_weekly = weekly_answers
