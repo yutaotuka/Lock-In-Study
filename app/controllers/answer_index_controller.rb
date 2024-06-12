@@ -22,7 +22,6 @@ class AnswerIndexController < ApplicationController
 
     # 過去10日間のデータを集計
     daily_answers.select("DATE(created_at) as date, first_answer_choice, COUNT(*) as count")
-          .where(created_at: start_date_for_day..end_date)
           .group("DATE(created_at), first_answer_choice")
           .each do |record|
             date = record.date
@@ -49,7 +48,6 @@ class AnswerIndexController < ApplicationController
       @weekly_data[week_key] = { study: 0, break: 0, other: 0 }
 
       weekly_answers.select("first_answer_choice, COUNT(*) as count")
-            .where(created_at: start_of_week..end_date) # 今週のデータも含めるためにend_dateを使用
             .group("first_answer_choice")
             .each do |record|
               choice = record.first_answer_choice
