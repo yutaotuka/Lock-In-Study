@@ -21,15 +21,14 @@ class AnswerIndexController < ApplicationController
     end
 
     # 過去10日間のデータを集計
-    Answer.select("DATE(created_at) as date, first_answer_choice, COUNT(*) as count")
-          .where(created_at: start_date_for_day..end_date)
-          .group("DATE(created_at), first_answer_choice")
-          .each do |record|
-            date = record.date
-            choice = record.first_answer_choice
-            count = record.count
-            @daily_data[date][choice.to_sym] = count if choice.present?
-          end
+    daily_answers.select("DATE(created_at) as date, first_answer_choice, COUNT(*) as count")
+                 .group("DATE(created_at), first_answer_choice")
+                 .each do |record|
+                   date = record.date
+                   choice = record.first_answer_choice
+                   count = record.count
+                   @daily_data[date][choice.to_sym] = count if choice.present?
+                 end
 
     # 割合を計算
     @daily_data.transform_values! do |choices|
@@ -48,14 +47,14 @@ class AnswerIndexController < ApplicationController
       week_key = start_of_week.strftime("%m/%d") + "~" + end_of_week.strftime("%m/%d")
       @weekly_data[week_key] = { study: 0, break: 0, other: 0 }
 
-      Answer.select("first_answer_choice, COUNT(*) as count")
-            .where(created_at: start_of_week..end_date) # 今週のデータも含めるためにend_dateを使用
-            .group("first_answer_choice")
-            .each do |record|
-              choice = record.first_answer_choice
-              count = record.count
-              @weekly_data[week_key][choice.to_sym] = count if choice.present?
-            end
+      weekly_answers.select("first_answer_choice, COUNT(*) as count")
+                    .where(created_at: start_of_week..end_date) # 今週のデータも含めるためにend_dateを使用
+                    .group("first_answer_choice")
+                    .each do |record|
+                      choice = record.first_answer_choice
+                      count = record.count
+                      @weekly_data[week_key][choice.to_sym] = count if choice.present?
+                    end
 
       # 割合を計算
       total = @weekly_data[week_key].values.sum
@@ -65,4 +64,3 @@ class AnswerIndexController < ApplicationController
     @weekly_data_json = @weekly_data.to_json
   end
 end
-
