@@ -5,9 +5,9 @@ class AnswerIndexController < ApplicationController
     start_date_for_week = 6.weeks.ago.beginning_of_day
 
     # 10日間の回答を取得
-    daily_answers = Answer.where(created_at: start_date_for_day..end_date)
+    daily_answers = current_user.answers.where(created_at: start_date_for_day..end_date)
     # 7週間の回答を取得
-    weekly_answers = Answer.where(created_at: start_date_for_week..end_date).order(created_at: :desc)
+    weekly_answers = current_user.answers.where(created_at: start_date_for_week..end_date).order(created_at: :desc)
 
     @answers = daily_answers.order(created_at: :desc)
     @answers_weekly = weekly_answers
@@ -21,7 +21,7 @@ class AnswerIndexController < ApplicationController
     end
 
     # 過去10日間のデータを集計
-    Answer.select("DATE(created_at) as date, first_answer_choice, COUNT(*) as count")
+    current_user.answers.select("DATE(created_at) as date, first_answer_choice, COUNT(*) as count")
           .where(created_at: start_date_for_day..end_date)
           .group("DATE(created_at), first_answer_choice")
           .each do |record|
@@ -48,7 +48,7 @@ class AnswerIndexController < ApplicationController
       week_key = start_of_week.strftime("%m/%d") + "~" + end_of_week.strftime("%m/%d")
       @weekly_data[week_key] = { study: 0, break: 0, other: 0 }
 
-      Answer.select("first_answer_choice, COUNT(*) as count")
+      current_user.answers.select("first_answer_choice, COUNT(*) as count")
             .where(created_at: start_of_week..end_date) # 今週のデータも含めるためにend_dateを使用
             .group("first_answer_choice")
             .each do |record|
@@ -65,4 +65,3 @@ class AnswerIndexController < ApplicationController
     @weekly_data_json = @weekly_data.to_json
   end
 end
-
