@@ -47,9 +47,9 @@ class AnswerIndexController < ApplicationController
       week_key = start_of_week.strftime("%m/%d") + "~" + end_of_week.strftime("%m/%d")
       @weekly_data[week_key] = { study: 0, break: 0, other: 0 }
 
-      weekly_answers.select("first_answer_choice, COUNT(*) as count")
+      weekly_answers.select("first_answer_choice, COUNT(*) as count, DATE(created_at)")
                     .where(created_at: start_of_week..end_date) # 今週のデータも含めるためにend_dateを使用
-                    .group("first_answer_choice")
+                    .group("first_answer_choice, DATE(created_at)")
                     .each do |record|
                       choice = record.first_answer_choice
                       count = record.count
