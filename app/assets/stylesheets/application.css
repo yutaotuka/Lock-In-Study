@@ -370,3 +370,11 @@ a{
   text-decoration: underline;
   cursor: pointer;
 }
+
+.terms_wrapper {
+  width: 80%;
+  max-width: 960px;
+  margin:30px auto;
+  margin-bottom: 140px;
+  background:#fefefe;
+}
