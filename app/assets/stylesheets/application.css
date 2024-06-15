@@ -356,3 +356,29 @@ a{
   border-radius: 5px;
   margin-bottom: 2px;
 }
+
+/* privacy, terms_of_service */
+.privacy_wrapper h1, .terms_wrapper h1 {
+  text-align: center;
+}
+
+.privacy_wrapper {
+  width: 80%;
+  max-width: 960px;
+  margin:30px auto;
+  margin-bottom: 140px;
+  background:#fefefe;
+}
+
+.inquiry_button:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.terms_wrapper {
+  width: 80%;
+  max-width: 960px;
+  margin:30px auto;
+  margin-bottom: 140px;
+  background:#fefefe;
+}

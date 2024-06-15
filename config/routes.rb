@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   root 'home#top'
+  get 'home/privacy_policy', to: 'home#privacy_policy'
+  get 'home/terms_of_service', to: 'home#terms_of_service'
 
   get 'line_login_api/login', to: 'line_login_api#login'
   get 'line_login_api/callback', to: 'line_login_api#callback'
