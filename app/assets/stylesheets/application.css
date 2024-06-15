@@ -356,3 +356,17 @@ a{
   border-radius: 5px;
   margin-bottom: 2px;
 }
+
+/* privacy */
+.privacy_wrapper {
+  width: 80%;
+  max-width: 960px;
+  margin:30px auto;
+  margin-bottom: 140px;
+  background:#fefefe;
+}
+
+.inquiry_button:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
