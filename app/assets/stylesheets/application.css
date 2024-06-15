@@ -358,7 +358,7 @@ a{
 }
 
 /* privacy */
-.privacy_wrapper h1 .title, .terms_wrapper h1 {
+.privacy_wrapper h1, .terms_wrapper h1 {
   text-align: center;
 }
 
