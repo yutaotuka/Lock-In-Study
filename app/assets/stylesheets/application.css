@@ -358,6 +358,10 @@ a{
 }
 
 /* privacy */
+.privacy_wrapper h1 .title, .terms_wrapper h1 {
+  text-align: center;
+}
+
 .privacy_wrapper {
   width: 80%;
   max-width: 960px;
