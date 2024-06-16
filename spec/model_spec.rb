@@ -39,3 +39,17 @@ RSpec.describe StudyRecord, type: :model do
     expect(study_record).to be_valid
   end
 end
+
+RSpec.describe Answer, type: :model do
+  it "user_idがなければ失敗する" do
+    answer = Answer.new(user_id: "")
+    expect(answer).to_not be_valid
+    expect(answer.errors[:user_id]).to include("を入力してください")
+  end
+
+  it "user_idがあれば成功する" do
+    user = User.create(line_user_id: "id12345", name: "成功 太郎")
+    answer = Answer.new(user_id: user.id)
+    expect(answer).to be_valid
+  end
+end
