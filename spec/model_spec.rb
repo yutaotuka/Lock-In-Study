@@ -25,3 +25,10 @@ RSpec.describe User, type: :model do
     expect(user.errors[:name]).to include("を入力してください")
   end
 end
+
+RSpec.describe StudyRecord, type: :model do
+  it "user_idがなければ失敗する" do
+    study_record = StudyRecord.new(user_id: "")
+    expect(study_record).to_not be_valid
+  end
+end
