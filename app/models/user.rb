@@ -3,6 +3,7 @@ class User < ApplicationRecord
   has_many :study_records
 
   validates :line_user_id, presence: true, uniqueness: true
+  validates :name, presence: true
 
   def self.guest
     find_or_create_by!(line_user_id: 'lis12345') do |user|
