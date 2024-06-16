@@ -34,7 +34,8 @@ RSpec.describe StudyRecord, type: :model do
   end
 
   it "user_idがあれば成功する" do
-    study_record = StudyRecord.new(user_id: "id123456789")
+    user = User.create(line_user_id: "id12345", name: "成功 太郎")
+    study_record = StudyRecord.new(user_id: user.id)
     expect(study_record).to be_valid
   end
 end
