@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-Rspec.describe User, type: :model do
+RSpec.describe User, type: :model do
   it "有効なline_user_idと名前がある場合は成功する" do
     user = User.new(line_user_id: "id12345678925", name: "有効 太郎")
     expect(user).to be_valid
