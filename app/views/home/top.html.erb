@@ -2,17 +2,34 @@
   <%= image_tag "drone.png", width:430, height:240 %>
     <h1>あなたが集中して勉強出来るように<br>サポートします</h1>
     <% if logged_in? %>
-      <%= button_to '使ってみる', study_records_path, method: :get, class: 'try-button' %>
+      <%= button_to '測定', study_records_path, method: :get, class: 'try-button' %>
     <% else %>
       <%= button_to '使ってみる', guest_login_path, method: :post, class: 'try-button' %>
     <% end %>
     <div class="explanation">
+      <div class="how_to_use">
+        <h3>基本の使い方</h3>
+        <p>
+        ・スタートボタンを押して勉強を開始<br>
+        ・測定中に質問が投げかけられたら回答してください<br>
+        ・勉強が完了したらストップボタンで測定終了
+        </P>
+        <%= image_tag "how_to_use.gif", width: '50%' %>
+      </div>
+      <div class="after_login">
+        <h3>ログインすると</h3>
+        <p>
+          ・過去の勉強時間の確認ができます<br>
+          ・過去の回答の確認ができます
+        </P>
+        <%= image_tag "after_login.gif", width: '50%' %>
+      </div>
       <% if logged_in? && !current_user.guest? %>
         <%= render 'shared/line-bot-qr' %>
       <% end %>
     </div>
     <% if logged_in? %>
-      <%= button_to '使ってみる', study_records_path, method: :get, class: 'try-button' %>
+      <%= button_to '測定', study_records_path, method: :get, class: 'try-button' %>
     <% else %>
       <%= button_to '使ってみる', guest_login_path, method: :post, class: 'try-button' %>
     <% end %>
