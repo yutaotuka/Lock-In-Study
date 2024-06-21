@@ -19,13 +19,19 @@
       <div class="after_login">
         <h3>ログインすると</h3>
         <p>
-          ・過去の勉強時間の確認ができます<br>
-          ・過去の回答の確認ができます
+          過去の勉強時間と回答の確認ができます。<br>
+          勉強中の傾向の確認、改善に役立ちます。
         </P>
         <%= image_tag "after_login.gif", width: '50%' %>
       </div>
       <% if logged_in? && !current_user.guest? %>
-        <%= render 'shared/line-bot-qr' %>
+      <div class="line_bot">
+        <p>
+          したのQRコードを読み込むと質問回答タイミングでLINEでの通知もできます。
+        </p>
+        <%= image_tag "line.jpeg", width: '25%' %>
+        <%= image_tag "line_bot_qr.png, width: '25%' %>
+      </div>
       <% end %>
     </div>
     <% if logged_in? %>

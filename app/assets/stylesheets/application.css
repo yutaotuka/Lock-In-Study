@@ -118,6 +118,7 @@ h1 {
 
 .explanation h3 {
   font-size: x-large;
+  border: solid, 6px;
 }
 .explanation p {
   font-size: large;
