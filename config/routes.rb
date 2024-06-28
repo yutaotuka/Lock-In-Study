@@ -36,9 +36,9 @@ Rails.application.routes.draw do
     collection do
       post :start
     end
-
-    # すべての未知ルートを404
-    match '*path', to: 'errors#not_found', via: :all
   end
   resources :answers, only: [:new, :create]
+
+      # すべての未知ルートを404
+      match '*path', to: 'errors#not_found', via: :all
 end
