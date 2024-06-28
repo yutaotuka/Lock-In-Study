@@ -23,6 +23,10 @@ Rails.application.routes.draw do
   # LINE_message
   post 'send_custom_message', to: 'messages#send_custom_message'
 
+  # エラー画面
+  get '/404', to: 'errors#not_found', as: :not_found
+  get '/500', to: 'errors#internal_server_error', as: :internal_server_error
+
 
   # get '/study_records' => 'study_records#index'
   resources :study_records, only: [:index] do
@@ -32,6 +36,9 @@ Rails.application.routes.draw do
     collection do
       post :start
     end
+
+    # すべての未知ルートを404
+    match '*path', to: 'errors#not_found', via: :all
   end
   resources :answers, only: [:new, :create]
 end
