@@ -3,7 +3,7 @@ source "https://rubygems.org"
 ruby "3.2.2"
 
 gem 'rails-i18n', '~> 7.0.0'
-
+gem 'sassc-rails'
 # line_login
 gem 'jwt'
 gem 'typhoeus'

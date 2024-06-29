@@ -1,0 +1,34 @@
+body {
+  background-color: #fafafa;
+  text-align: center;
+}
+
+.error-box {
+  width: 90%;
+  margin: 0 auto;
+  padding-top: 36px;
+}
+
+.error-message {
+  margin: 32px 0;
+}
+.error-box h1,
+.error-box h3,
+.error-message p {
+  color: #737373;
+}
+
+.error-box h1 {
+  font-size: 56px;
+  margin-bottom: 0;
+}
+
+.error-box h3,
+.error-message p {
+  font-size: 18px;
+  margin: 0;
+}
+
+.top-page-link {
+  margin: 8px 0;
+}
