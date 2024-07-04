@@ -59,3 +59,7 @@ jobs:
 
       - name: Run tests
         run: bundle exec rspec
+        env:
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_TEST_MASTER_KEY }}
+          LINE_LOGIN_CLIENT_ID: ${{ secrets.LINE_LOGIN_CLIENT_ID }}
+          LINE_LOGIN_CLIENT_SECRET: ${{ secrets.LINE_LOGIN_CLIENT_SECRET }}
