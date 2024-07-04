@@ -1,20 +1,14 @@
-module LineLoginHelper
-  def stub_line_login
-    token_response = {
-      access_token: 'test_access_token',
-      expires_in: 3600,
-      id_token: 'test_id_token'
-    }.to_json
+require 'rails_helper'
 
-    profile_response = {
-      userId: 'U1234567890abcdef1234567890abcdef',
-      displayName: 'Test User',
-      pictureUrl: 'https://example.com/profile.png',
-      statusMessage: 'Hello, world!'
-    }.to_json
+RSpec.describe 'LINE Login', type: :system do
+  include LineLoginHelper
 
-    stub_request(:post, 'https://api.line.me/oauth2/v2.1/token').
-      to_return(status: 200, body: token_response, headers: { 'Content-Type' => 'application/json' })
+  before do
+    stub_line_login
+  end
 
-    stub_request(:get, 'https://api.line.me/v2/profile').
-      to_return(status: 200, body: profile_response, headers: { 'Content-Type' => 'application/j
+  it 'LINEログインが成功する' do
+    visit line_login_api_login_path(redirect_uri: 'http://localhost:3000/callback')
+    expect(page).to have_content('ログインしました')
+  end
+end

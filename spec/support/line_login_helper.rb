@@ -18,5 +18,8 @@ module LineLoginHelper
 
     stub_request(:get, 'https://api.line.me/v2/profile').
       to_return(status: 200, body: profile_response, headers: { 'Content-Type' => 'application/json' })
+
+    stub_request(:get, %r{https://access.line.me/oauth2/v2.1/authorize}).
+      to_return(status: 302, headers: { 'Location' => 'http://localhost:3000/callback?code=test_code&state=test_state' })
   end
 end
