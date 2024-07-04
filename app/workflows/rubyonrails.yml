@@ -56,16 +56,12 @@ jobs:
           bundle exec rails db:create
           bundle exec rails db:migrate
 
-      - name: Set up XVFB
+      - name: Run tests
         run: |
           /usr/bin/Xvfb :99 -ac &
           export DISPLAY=:99
-
-      - name: Run tests
-        run: |
           bundle exec rspec
         env:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_TEST_MASTER_KEY }}
           LINE_LOGIN_CLIENT_ID: ${{ secrets.LINE_LOGIN_CLIENT_ID }}
           LINE_LOGIN_CLIENT_SECRET: ${{ secrets.LINE_LOGIN_CLIENT_SECRET }}
-          REDIRECT_URI: http://localhost:3000/line_login_api/callback

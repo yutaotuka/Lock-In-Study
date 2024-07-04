@@ -1,4 +1,3 @@
-# spec/support/line_login_helper.rb
 module LineLoginHelper
   def stub_line_login
     token_response = {

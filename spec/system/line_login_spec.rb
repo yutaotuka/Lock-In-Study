@@ -1,10 +1,10 @@
-# spec/system/line_login_spec.rb
 require 'rails_helper'
 
 RSpec.describe 'LINE Login', type: :system do
   include LineLoginHelper
 
   before do
+    driven_by(:rack_test)
     stub_line_login
   end
 
