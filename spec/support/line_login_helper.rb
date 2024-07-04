@@ -1,3 +1,4 @@
+# spec/support/line_login_helper.rb
 module LineLoginHelper
   def stub_line_login
     token_response = {
@@ -20,6 +21,6 @@ module LineLoginHelper
       to_return(status: 200, body: profile_response, headers: { 'Content-Type' => 'application/json' })
 
     stub_request(:get, %r{https://access.line.me/oauth2/v2.1/authorize}).
-      to_return(status: 302, headers: { 'Location' => 'http://localhost:3000/callback?code=test_code&state=test_state' })
+      to_return(status: 302, headers: { 'Location' => "#{ENV['REDIRECT_URI']}?code=test_code&state=test_state" })
   end
 end
