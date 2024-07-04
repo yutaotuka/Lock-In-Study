@@ -133,8 +133,8 @@ class LineLoginApiController < ApplicationController
         grant_type: 'authorization_code',
         code: code,
         redirect_uri: redirect_uri,
-        client_id: Rails.application.credentials.line_login[:client_id], # 本番環境では環境変数などに保管
-        client_secret: Rails.application.credentials.line_login[:client_secret] # 本番環境では環境変数などに保管
+        client_id: Rails.application.credentials.line_login[:client_id],
+        client_secret: Rails.application.credentials.line_login[:client_secret]
       }
     }
   
