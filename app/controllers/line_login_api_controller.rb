@@ -147,6 +147,4 @@ class LineLoginApiController < ApplicationController
       return nil, nil
     end
   end
-  
-
 end
