@@ -1,6 +1,10 @@
 class ApplicationController < ActionController::Base
   helper_method :current_user, :logged_in?
 
+  protect_from_forgery with: :exception
+
+  # テスト環境でのみCSRFトークンチェックを無効にする
+  skip_before_action :verify_authenticity_token, if: -> { Rails.env.test? }
   private
 
   def current_user
