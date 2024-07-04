@@ -8,7 +8,7 @@ require 'rspec/rails'
 require 'webmock/rspec'
 require 'capybara/rspec'
 require 'selenium/webdriver'
-require 'dotenv'
+require 'dotenv-rails'  # dotenv-railsを読み込む
 Dotenv.load('.env.test')
 # Add additional requires below this line. Rails is not loaded until this point!
 

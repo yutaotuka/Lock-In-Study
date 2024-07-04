@@ -76,6 +76,7 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webmock"
+  gem 'dotenv-rails'
 end
 
 gem "dockerfile-rails", ">= 1.6", :group => :development
