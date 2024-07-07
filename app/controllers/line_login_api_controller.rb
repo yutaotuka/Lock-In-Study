@@ -16,7 +16,6 @@ class LineLoginApiController < ApplicationController
     base_authorization_url = 'https://access.line.me/oauth2/v2.1/authorize'
     response_type = 'code'
     client_id = Rails.application.credentials.line_login[:client_id]
-    #本番環境では環境変数などに保管する
     redirect_uri = CGI.escape(line_login_api_callback_url)
     state = session[:state]
     scope = 'profile%20openid' #ユーザーに付与を依頼する権限
@@ -69,7 +68,7 @@ class LineLoginApiController < ApplicationController
   # 'sub' キーはLINEユーザーIDを表します。
     decoded_token[0]['sub']
   rescue JWT::DecodeError
-  # 何らかの理由でデコードに失敗した場合、nilを返します。
+  # 何らかの理由でデコードに失敗した場合、nilを返す。
     nil
   end
 
@@ -87,7 +86,7 @@ class LineLoginApiController < ApplicationController
       options = {
         body: {
           id_token: line_user_id_token,
-          client_id: Rails.application.credentials.line_login[:client_id] # 本番環境では環境変数などに保管
+          client_id: Rails.application.credentials.line_login[:client_id]
         }
       }
 
@@ -133,8 +132,8 @@ class LineLoginApiController < ApplicationController
         grant_type: 'authorization_code',
         code: code,
         redirect_uri: redirect_uri,
-        client_id: Rails.application.credentials.line_login[:client_id], # 本番環境では環境変数などに保管
-        client_secret: Rails.application.credentials.line_login[:client_secret] # 本番環境では環境変数などに保管
+        client_id: Rails.application.credentials.line_login[:client_id],
+        client_secret: Rails.application.credentials.line_login[:client_secret]
       }
     }
   

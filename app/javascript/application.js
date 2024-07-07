@@ -97,7 +97,7 @@ document.addEventListener('turbo:load', function() {
             }
           });
       }
-    }, 1200000); // 1分＝60000
+    }, 1800000); // 1分＝60000
   });
 
   stopBtn.addEventListener('click', function() {
