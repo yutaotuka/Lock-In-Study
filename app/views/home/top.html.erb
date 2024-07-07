@@ -1,7 +1,7 @@
 <div class="main-content">
   <%= image_tag "drone.png", width:430, height:240 %>
-    <h1>あなたが集中して勉強出来るように<br>サポートします</h1>
-    <% if logged_in? %>
+    <h1>あなたが集中して学習出来るように<br>サポートします</h1>
+    <% if logged_in? && !current_user.guest? %>
       <%= button_to '測定', study_records_path, method: :get, class: 'try-button' %>
     <% else %>
       <%= button_to '使ってみる', guest_login_path, method: :post, class: 'try-button' %>
@@ -10,7 +10,7 @@
       <div class="how_to_use">
         <h3>基本の使い方</h3>
         <p>
-        ・スタートボタンを押して勉強を開始<br>
+        ・スタートボタンを押して学習を開始<br>
         ・測定中に質問が投げかけられたら回答してください<br>
         ・勉強が完了したらストップボタンで測定終了
         </P>
@@ -34,7 +34,7 @@
       </div>
       <% end %>
     </div>
-    <% if logged_in? %>
+    <% if logged_in? && !current_user.guest? %>
       <%= button_to '測定', study_records_path, method: :get, class: 'try-button' %>
     <% else %>
       <%= button_to '使ってみる', guest_login_path, method: :post, class: 'try-button' %>
