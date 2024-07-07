@@ -28,8 +28,8 @@ https://www.lockinstudy.com
  * 勉強時間の記録一覧
  * 質問への回答一覧
 
-## 機能の実装方針予定
- * 
+<!-- ## 機能の実装方針予定
+ *  -->
  
 ## 使用予定の技術スタック
  * サーバーサイド
@@ -68,8 +68,6 @@ Figma : https://www.figma.com/file/J8zq5K6iB66vGLrMDfcUVj/Lock-In-Study?type=des
 
 
 ### ER図
-drow.io : https://drive.google.com/file/d/1kICFDQ5gEX7CCyFQ4HivtaYIBhddf9sB/view?usp=sharing
-
 ![alt text](<Lock In Study.drawio.png>)
 
 ### 著作権関係
