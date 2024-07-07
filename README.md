@@ -72,6 +72,8 @@ Figma : https://www.figma.com/file/J8zq5K6iB66vGLrMDfcUVj/Lock-In-Study?type=des
 ### ER図
 drow.io : https://drive.google.com/file/d/1kICFDQ5gEX7CCyFQ4HivtaYIBhddf9sB/view?usp=sharing
 
+![alt text](<Lock In Study.drawio.png>)
+
 ### 著作権関係
 ・通知音
   魔王魂：https://maou.audio
