@@ -1,7 +1,7 @@
 <div class="main-content">
   <%= image_tag "drone.png", width:430, height:240 %>
     <h1>あなたが集中して勉強出来るように<br>サポートします</h1>
-    <% if logged_in? %>
+    <% if logged_in? && !current_user.guest? %>
       <%= button_to '測定', study_records_path, method: :get, class: 'try-button' %>
     <% else %>
       <%= button_to '使ってみる', guest_login_path, method: :post, class: 'try-button' %>
@@ -34,7 +34,7 @@
       </div>
       <% end %>
     </div>
-    <% if logged_in? %>
+    <% if logged_in? && !current_user.guest? %>
       <%= button_to '測定', study_records_path, method: :get, class: 'try-button' %>
     <% else %>
       <%= button_to '使ってみる', guest_login_path, method: :post, class: 'try-button' %>
