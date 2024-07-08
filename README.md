@@ -18,11 +18,13 @@ https://www.lockinstudy.com
 |:-------:|:-------:|
 | [![Image from Gyazo](https://i.gyazo.com/fd7cc7a085a9ab1133ab17e94ae0c212.gif)](https://gyazo.com/fd7cc7a085a9ab1133ab17e94ae0c212) | [![Image from Gyazo](https://i.gyazo.com/f489df712c4bac01e3d881541e133d52.gif)](https://gyazo.com/f489df712c4bac01e3d881541e133d52) |
 | 未ログインでも学習中の質問機能を使えます  | ログインページにはLINE APIを使用 |
+
 | 学習時間測定 | 質問機能 |
 |:-------:|:-------:|
 | [![Image from Gyazo](https://i.gyazo.com/8d663bfbd58b2cb002faa2d501657500.gif)](https://gyazo.com/8d663bfbd58b2cb002faa2d501657500) | [![Image from Gyazo](https://i.gyazo.com/e3091d4eccd1e49a9b4bdb2856ecaabc.jpg)](https://gyazo.com/e3091d4eccd1e49a9b4bdb2856ecaabc) |
 | 学習時間の測定中は他の画面への移行を防ぐ為ヘッダー・フッター共に非表示にしています。  | 
 定期的に質問を投げかけますので回答してください。 |
+
 | 学習時間一覧 | 回答一覧 |
 |:-------:|:-------:|
 | [![Image from Gyazo](https://i.gyazo.com/0493bc11cea9e7eb1fac40e0a3b6a5cb.gif)](https://gyazo.com/0493bc11cea9e7eb1fac40e0a3b6a5cb) | [![Image from Gyazo](https://i.gyazo.com/2ec7ddfa3e6d2ce8ac640942fee7ff09.gif)](https://gyazo.com/2ec7ddfa3e6d2ce8ac640942fee7ff09) |
