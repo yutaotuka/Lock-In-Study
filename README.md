@@ -20,7 +20,7 @@ https://www.lockinstudy.com
 | 未ログインでも学習中の質問機能を使えます  | ログインページにはLINE APIを使用 |
 | 学習時間測定 | 質問機能 |
 |:-------:|:-------:|
-| [![Image from Gyazo](https://i.gyazo.com/8d663bfbd58b2cb002faa2d501657500.gif)](https://gyazo.com/8d663bfbd58b2cb002faa2d501657500) |  |
+| [![Image from Gyazo](https://i.gyazo.com/8d663bfbd58b2cb002faa2d501657500.gif)](https://gyazo.com/8d663bfbd58b2cb002faa2d501657500) | [![Image from Gyazo](https://i.gyazo.com/e3091d4eccd1e49a9b4bdb2856ecaabc.jpg)](https://gyazo.com/e3091d4eccd1e49a9b4bdb2856ecaabc) |
 | 学習時間の測定中は他の画面への移行を防ぐ為ヘッダー・フッター共に非表示にしています。  | 
 定期的に質問を投げかけますので回答してください。 |
 | 学習時間一覧 | 回答一覧 |
