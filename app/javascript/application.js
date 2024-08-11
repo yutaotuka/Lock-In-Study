@@ -111,10 +111,10 @@ document.addEventListener('turbo:load', function() {
     .then(response => response.json())
     .then(data => {
       if (data.success) {
-        stopBtn.style.display = 'none';
-        startBtn.style.display = 'inline';
-        studyRecord.style.display = 'inline';
-        imgBox.classList.remove('animate-img_box');
+        // stopBtn.style.display = 'none';
+        // startBtn.style.display = 'inline';
+        // studyRecord.style.display = 'inline';
+        // imgBox.classList.remove('animate-img_box');
         alert('おつかれさま！！'); 
         // ページをリロード
         window.location.reload();
