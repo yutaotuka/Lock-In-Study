@@ -1,16 +1,16 @@
 class StudyRecordsController < ApplicationController
   def index
-    last_study_record = current_user.study_records.last
-    if last_study_record && last_study_record.duration_time
-      total_seconds = last_study_record.duration_time
-      hours = total_seconds / 3600
-      minutes = (total_seconds / 60) % 60
-      seconds = total_seconds % 60
+    # last_study_record = current_user.study_records.last
+    # if last_study_record && last_study_record.duration_time
+    #   total_seconds = last_study_record.duration_time
+    #   hours = total_seconds / 3600
+    #   minutes = (total_seconds / 60) % 60
+    #   seconds = total_seconds % 60
   
-      @duration_time = format("%02d時間 %02d分 %02d秒", hours, minutes, seconds)
-    else
-      @duration_time = "データなし"
-    end
+    #   @duration_time = format("%02d時間 %02d分 %02d秒", hours, minutes, seconds)
+    # else
+    #   @duration_time = "データなし"
+    # end
     
   end
 

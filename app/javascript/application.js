@@ -64,7 +64,6 @@ document.addEventListener('turbo:load', function() {
       if (data.success) {
         studyRecordId = data.study_record_id;
         startBtn.style.display = 'none';
-        studyRecord.style.display = 'none';
         header.style.display = 'none';
         footer.style.display = 'none';
         stopBtn.style.display = 'inline';
