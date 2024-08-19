@@ -113,7 +113,7 @@ document.addEventListener('turbo:load', function() {
       if (data.success) {
         // stopBtn.style.display = 'none';
         // startBtn.style.display = 'inline';
-        studyRecord.style.display = 'inline';
+        // studyRecord.style.display = 'inline';
         // imgBox.classList.remove('animate-img_box');
         alert('おつかれさま！！'); 
         // ページをリロード
