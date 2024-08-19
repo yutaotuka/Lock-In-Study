@@ -11,7 +11,6 @@ class StudyRecordsController < ApplicationController
     else
       @duration_time = "データなし"
     end
-    
   end
 
   def start
