@@ -64,6 +64,7 @@ document.addEventListener('turbo:load', function() {
       if (data.success) {
         studyRecordId = data.study_record_id;
         startBtn.style.display = 'none';
+        studyRecord.display = 'none';
         header.style.display = 'none';
         footer.style.display = 'none';
         stopBtn.style.display = 'inline';
@@ -96,7 +97,7 @@ document.addEventListener('turbo:load', function() {
             }
           });
       }
-    }, 1620000); // 1分＝60000
+    }, 120000); // 1分＝60000
   });
 
   stopBtn.addEventListener('click', function() {
@@ -112,7 +113,7 @@ document.addEventListener('turbo:load', function() {
       if (data.success) {
         // stopBtn.style.display = 'none';
         // startBtn.style.display = 'inline';
-        // studyRecord.style.display = 'inline';
+        studyRecord.style.display = 'inline';
         // imgBox.classList.remove('animate-img_box');
         alert('おつかれさま！！'); 
         // ページをリロード
