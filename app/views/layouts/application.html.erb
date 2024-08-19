@@ -17,6 +17,15 @@
     <meta property="og:site_name" content="Lock In Study">
     <meta property="og:description" content="勉強中に聞かれる質問に答えることで集中力を保ち、勉強内容の理解を深めることができるアプリです。">
   </head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MJYXL2Q9S6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-MJYXL2Q9S6');
+  </script>
 
   <body>
   <% if logged_in? && !current_user.guest? %>
