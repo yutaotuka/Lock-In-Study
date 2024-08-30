@@ -28,7 +28,7 @@ class AnswerIndexController < ApplicationController
             date = record.date
             choice = record.first_answer_choice
             count = record.count
-            if @daily_data.key?(data)
+            if @daily_data.key?(date)
               @daily_data[date][choice.to_sym] = count if choice.present?
             end
           end
