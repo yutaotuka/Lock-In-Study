@@ -28,8 +28,9 @@ class AnswerIndexController < ApplicationController
             date = record.date
             choice = record.first_answer_choice
             count = record.count
-            # @daily_data[date] ||= { study: 0, break: 0, other: 0 }
-            @daily_data[date][choice.to_sym] = count if choice.present?
+            if @daily_data.key?(data)
+              @daily_data[date][choice.to_sym] = count if choice.present?
+            end
           end
 
     # 割合を計算
