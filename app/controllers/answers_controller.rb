@@ -1,4 +1,3 @@
-# app/controllers/answers_controller.rb
 class AnswersController < ApplicationController
   def new
     @answer = initialize_answer_from_session

@@ -10,7 +10,7 @@ document.addEventListener('turbo:load', function() {
   var studyRecord = document.getElementById('study_record');
   var imgBox = document.getElementById('drone-img');
   var studyRecordId;
-  var intervalId;  // setIntervalのIDを保存する変数
+  var intervalId;
   var audio = new Audio('/jingle.mp3');
   var answerForm = document.getElementById('question_area'); // フォーム要素を取得
   var userId = document.querySelector('input[name="user_id"]').value;
@@ -18,7 +18,7 @@ document.addEventListener('turbo:load', function() {
 
       if (answerForm) {
         answerForm.addEventListener('submit', function(event) {
-          var radioGroups = {}; // ラジオボタンのグループを保存するオブジェクト
+          var radioGroups = {};
           var isValid = true;
     
           // ラジオボタンのチェック状態を確認
@@ -75,7 +75,6 @@ document.addEventListener('turbo:load', function() {
       var questionBox = document.getElementById("question_box");
       if (questionBox.style.display === "none") {
         questionBox.style.display = "block";
-        // 音を再生
         audio.play().catch(function(error) {
           console.error('Audio playback failed:', error);
         });
@@ -110,12 +109,7 @@ document.addEventListener('turbo:load', function() {
     .then(response => response.json())
     .then(data => {
       if (data.success) {
-        // stopBtn.style.display = 'none';
-        // startBtn.style.display = 'inline';
-        // studyRecord.style.display = 'inline';
-        // imgBox.classList.remove('animate-img_box');
         alert('おつかれさま！！'); 
-        // ページをリロード
         window.location.reload();
       } else {
         alert('時間測定に失敗しました。');
