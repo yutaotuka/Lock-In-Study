@@ -1,4 +1,3 @@
-<!-- app/views/answers/_final_message.html.erb -->
 <%= turbo_frame_tag "question_area" do %>
   <%= turbo_stream.replace "question_area", partial: "answers/form" %>
 <% end %>

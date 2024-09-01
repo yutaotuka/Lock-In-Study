@@ -14,14 +14,12 @@ class AnswersController < ApplicationController
       if final_question_answered?(@answer)
         @answer.save
         session.delete(:answers)
-        p "全部OK"
         render_final_message
       else
         @next_question = determine_next_question(@answer)
         render_next_question_or_final_message
       end
     else
-      p "バリデーションエラー"
       respond_to do |format|
         format.turbo_stream { render turbo_stream: turbo_stream.replace("question_area", partial: "answers/form", locals: { answer: @answer }) }
         format.html { render :new }

@@ -23,7 +23,6 @@ document.addEventListener('turbo:load', function() {
     
           // ラジオボタンのチェック状態を確認
           answerForm.querySelectorAll('input[type=radio]').forEach(function(radio) {
-            // グループ名ごとにチェックされた状態を格納
             if (!radioGroups[radio.name]) {
               radioGroups[radio.name] = false; // 初期状態は未チェック
             }
