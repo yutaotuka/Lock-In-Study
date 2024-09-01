@@ -16,7 +16,7 @@ class AnswersController < ApplicationController
         render_final_message
       else
         @next_question = determine_next_question(@answer)
-        render_next_question_or_final_message
+        render_next_question
       end
     else
       respond_to do |format|
@@ -52,16 +52,12 @@ class AnswersController < ApplicationController
       else
         "何をしていますか？"
       end
-    else
-      "質問はこれで終了です。"
     end
   end
 
-  def render_next_question_or_final_message
-    if @next_question != "質問はこれで終了です。"
-      respond_to do |format|
-        format.turbo_stream { render turbo_stream: turbo_stream.update("question_area", partial: "answers/next_question", locals: { next_question: @next_question }) }
-      end
+  def render_next_question
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.update("question_area", partial: "answers/next_question", locals: { next_question: @next_question }) }
     end
   end
 
