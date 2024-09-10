@@ -1,7 +1,7 @@
 class MessagesController < ApplicationController
   def send_custom_message
-    user_id = params[:user_id] # LINEのユーザーIDを取得
-    message = params[:message] # 送信するメッセージを取得
+    user_id = params[:user_id]
+    message = params[:message]
     
     response = LineBotService.send_message(user_id, message)
     
