@@ -3,51 +3,45 @@ import "@hotwired/turbo-rails"
 import "controllers"
 
 document.addEventListener('turbo:load', function() {
-  var startBtn = document.getElementById('start-btn');
-  var stopBtn = document.getElementById('stop-btn');
-  var header = document.getElementById('header');
-  var footer = document.getElementById('footer');
-  var studyRecord = document.getElementById('study_record');
-  var imgBox = document.getElementById('drone-img');
-  var studyRecordId;
-  var intervalId;
-  var audio = new Audio('/jingle.mp3');
-  var answerForm = document.getElementById('question_area'); // フォーム要素を取得
-  var userId = document.querySelector('input[name="user_id"]').value;
+  let startBtn = document.getElementById('start-btn');
+  let stopBtn = document.getElementById('stop-btn');
+  let header = document.getElementById('header');
+  let footer = document.getElementById('footer');
+  let studyRecord = document.getElementById('study_record');
+  let imgBox = document.getElementById('drone-img');
+  let studyRecordId;
+  let intervalId;
+  let audio = new Audio('/jingle.mp3');
+  let answerForm = document.getElementById('question_area'); // フォーム要素を取得
+  let userId = document.querySelector('input[name="user_id"]').value;
 
+  if (answerForm) {
+    answerForm.addEventListener('submit', function(event) {
+      let radioGroups = {};
+      let isValid = true;
 
-      if (answerForm) {
-        answerForm.addEventListener('submit', function(event) {
-          var radioGroups = {};
-          var isValid = true;
-    
-          // ラジオボタンのチェック状態を確認
-          answerForm.querySelectorAll('input[type=radio]').forEach(function(radio) {
-            if (!radioGroups[radio.name]) {
-              radioGroups[radio.name] = false; // 初期状態は未チェック
-            }
-            if (radio.checked) {
-              radioGroups[radio.name] = true; // いずれかがチェックされていればtrue
-            }
-          });
-    
-          // すべてのラジオボタングループがチェックされているか確認
-          for (var groupName in radioGroups) {
-            if (!radioGroups[groupName]) {
-              isValid = false; // 未チェックのグループがあれば無効
-              break;
-            }
-          }
-    
-          // バリデーションが失敗した場合はフォームの送信を阻止
-          if (!isValid) {
-            event.preventDefault();
-            alert('質問に回答してください。');
-          }
-        });
+      answerForm.querySelectorAll('input[type=radio]').forEach(function(radio) {
+        if (!radioGroups[radio.name]) {
+          radioGroups[radio.name] = false;
+        }
+        if (radio.checked) {
+          radioGroups[radio.name] = true;
+        }
+      });
+
+      for (let groupName in radioGroups) {
+        if (!radioGroups[groupName]) {
+          isValid = false;
+          break;
+        }
       }
 
-  
+      if (!isValid) {
+        event.preventDefault();
+        alert('質問に回答してください。');
+      }
+    });
+  }
 
   startBtn.addEventListener('click', function() {
     console.log("Start button clicked!"); 
@@ -72,13 +66,12 @@ document.addEventListener('turbo:load', function() {
     });
 
     intervalId = setInterval(function() {
-      var questionBox = document.getElementById("question_box");
+      let questionBox = document.getElementById("question_box");
       if (questionBox.style.display === "none") {
         questionBox.style.display = "block";
         audio.play().catch(function(error) {
           console.error('Audio playback failed:', error);
         });
-        // LINEメッセージを送信
         fetch('/send_custom_message', {
           method: 'POST',
           headers: {
@@ -120,11 +113,9 @@ document.addEventListener('turbo:load', function() {
 });
 
 // フォームの回答が終わったら非表示にする
-// _final_messageで着火させてる
 document.addEventListener('form-completed', function() {
-  var questionBox = document.getElementById("question_box");
+  let questionBox = document.getElementById("question_box");
   if (questionBox) {
     questionBox.style.display = "none";
   }
 });
-
