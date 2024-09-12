@@ -15,34 +15,37 @@ document.addEventListener('turbo:load', function() {
   let answerForm = document.getElementById('question_area'); // フォーム要素を取得
   let userId = document.querySelector('input[name="user_id"]').value;
 
-  if (answerForm) {
-    answerForm.addEventListener('submit', function(event) {
-      let radioGroups = {};
-      let isValid = true;
-
-      answerForm.querySelectorAll('input[type=radio]').forEach(function(radio) {
-        if (!radioGroups[radio.name]) {
-          radioGroups[radio.name] = false;
-        }
-        if (radio.checked) {
-          radioGroups[radio.name] = true;
-        }
-      });
-
-      for (let groupName in radioGroups) {
-        if (!radioGroups[groupName]) {
-          isValid = false;
-          break;
-        }
+      if (answerForm) {
+        answerForm.addEventListener('submit', function(event) {
+          let radioGroups = {};
+          let isValid = true;
+    
+          // ラジオボタンのチェック状態を確認
+          answerForm.querySelectorAll('input[type=radio]').forEach(function(radio) {
+            if (!radioGroups[radio.name]) {
+              radioGroups[radio.name] = false; // 初期状態は未チェック
+            }
+            if (radio.checked) {
+              radioGroups[radio.name] = true; // いずれかがチェックされていればtrue
+            }
+          });
+    
+          // すべてのラジオボタングループがチェックされているか確認
+          for (let groupName in radioGroups) {
+            if (!radioGroups[groupName]) {
+              isValid = false; // 未チェックのグループがあれば無効
+              break;
+            }
+          }
+    
+          // バリデーションが失敗した場合はフォームの送信を阻止
+          if (!isValid) {
+            event.preventDefault();
+            alert('質問に回答してください。');
+          }
+        });
       }
-
-      if (!isValid) {
-        event.preventDefault();
-        alert('質問に回答してください。');
-      }
-    });
-  }
-
+ 
   startBtn.addEventListener('click', function() {
     console.log("Start button clicked!"); 
     fetch('/study_records/start', {
@@ -72,6 +75,7 @@ document.addEventListener('turbo:load', function() {
         audio.play().catch(function(error) {
           console.error('Audio playback failed:', error);
         });
+        // LINEメッセージを送信
         fetch('/send_custom_message', {
           method: 'POST',
           headers: {
@@ -113,6 +117,7 @@ document.addEventListener('turbo:load', function() {
 });
 
 // フォームの回答が終わったら非表示にする
+// _final_messageで着火させてる
 document.addEventListener('form-completed', function() {
   let questionBox = document.getElementById("question_box");
   if (questionBox) {
