@@ -44,18 +44,18 @@
   <script src="https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/5-4-1/js/5-4-1.js"></script>
 
   <script>
-    var dailyChart, weeklyChart;
+    let dailyChart, weeklyChart;
 
     function initDailyChart() {
       if (dailyChart) {
         dailyChart.destroy();
       }
 
-      var dailyData = <%= @daily_data_json.html_safe %>;
-      var labels = Object.keys(dailyData);
-      var studyData = [];
-      var breakData = [];
-      var otherData = [];
+      const dailyData = <%= @daily_data_json.html_safe %>;
+      const labels = Object.keys(dailyData);
+      const studyData = [];
+      const breakData = [];
+      const otherData = [];
 
       labels.forEach(function(date) {
         studyData.push(dailyData[date].study);
@@ -63,7 +63,7 @@
         otherData.push(dailyData[date].other);
       });
 
-      var ctx = document.getElementById('dailyChart').getContext('2d');
+      const ctx = document.getElementById('dailyChart').getContext('2d');
       dailyChart = new Chart(ctx, {
         type: 'line',
         data: {
@@ -104,11 +104,11 @@
         weeklyChart.destroy();
       }
 
-      var weeklyData = <%= @weekly_data_json.html_safe %>;
-      var labels = Object.keys(weeklyData);
-      var studyData = [];
-      var breakData = [];
-      var otherData = [];
+      const weeklyData = <%= @weekly_data_json.html_safe %>;
+      const labels = Object.keys(weeklyData);
+      const studyData = [];
+      const breakData = [];
+      const otherData = [];
 
       labels.forEach(function(week) {
         studyData.push(weeklyData[week].study);
@@ -116,7 +116,7 @@
         otherData.push(weeklyData[week].other);
       });
 
-      var ctx = document.getElementById('weeklyChart').getContext('2d');
+      const ctx = document.getElementById('weeklyChart').getContext('2d');
       weeklyChart = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -156,7 +156,7 @@
     }
 
     function loadScript(url, callback) {
-      var script = document.createElement('script');
+      const script = document.createElement('script');
       script.type = 'text/javascript';
       script.src = url;
       script.onload = callback;
@@ -176,7 +176,7 @@
 
     // タブのクリックイベント
     $(document).on('click', '.tab a', function() {
-      var idName = $(this).attr('href');
+      const idName = $(this).attr('href');
       $('.area').hide(); // 全部隠す
       $(idName).show(); // クリックされたタブに対応するエリアを表示
 
