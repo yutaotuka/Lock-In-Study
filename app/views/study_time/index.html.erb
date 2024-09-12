@@ -17,7 +17,7 @@
 
   <script>
     function loadScript(url, callback) {
-      var script = document.createElement('script');
+      const script = document.createElement('script');
       script.type = 'text/javascript';
       script.src = url;
       script.onload = callback;
@@ -25,7 +25,7 @@
     }
 
     function initChart(ctxId, data, labels) {
-      var ctx = document.getElementById(ctxId).getContext('2d');
+      const ctx = document.getElementById(ctxId).getContext('2d');
       return new Chart(ctx, {
         type: 'bar',
         data: {
@@ -45,9 +45,9 @@
               ticks: {
                 stepSize: 7200,
                 callback: function(value) {
-                  var hours = Math.floor(value / 3600);
-                  var minutes = Math.floor((value % 3600) / 60);
-                  var seconds = value % 60;
+                  const hours = Math.floor(value / 3600);
+                  const minutes = Math.floor((value % 3600) / 60);
+                  const seconds = value % 60;
                   return `${hours}時間${minutes}分${seconds}秒`;
                 }
               }
@@ -57,11 +57,11 @@
             tooltip: {
               callbacks: {
                 label: function(context) {
-                  var totalSeconds = context.parsed.y;
-                  var hours = Math.floor(totalSeconds / 3600);
-                  var minutes = Math.floor((totalSeconds % 3600) / 60);
-                  var seconds = totalSeconds % 60;
-                  return context.dataset.label + ': ' + hours + '時間 ' + minutes + '分 ' + seconds + '秒';
+                  const totalSeconds = context.parsed.y;
+                  const hours = Math.floor(totalSeconds / 3600);
+                  const minutes = Math.floor((totalSeconds % 3600) / 60);
+                  const seconds = totalSeconds % 60;
+                  return `${context.dataset.label}:${hours}時間${minutes}分${seconds}秒`;
                 }
               }
             }
@@ -78,7 +78,7 @@
 
     // タブのクリックイベント
     $('.tab a').on('click', function() {
-      var idName = $(this).attr('href');
+      const idName = $(this).attr('href');
       $('.area').hide(); // 全部隠す
       $(idName).show(); // クリックされたタブに対応するエリアを表示
       return false;
