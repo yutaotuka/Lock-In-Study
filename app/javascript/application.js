@@ -3,21 +3,21 @@ import "@hotwired/turbo-rails"
 import "controllers"
 
 document.addEventListener('turbo:load', function() {
-  let startBtn = document.getElementById('start-btn');
-  let stopBtn = document.getElementById('stop-btn');
-  let header = document.getElementById('header');
-  let footer = document.getElementById('footer');
-  let studyRecord = document.getElementById('study_record');
-  let imgBox = document.getElementById('drone-img');
+  const startBtn = document.getElementById('start-btn');
+  const stopBtn = document.getElementById('stop-btn');
+  const header = document.getElementById('header');
+  const footer = document.getElementById('footer');
+  const studyRecord = document.getElementById('study_record');
+  const imgBox = document.getElementById('drone-img');
   let studyRecordId;
   let intervalId;
-  let audio = new Audio('/jingle.mp3');
-  let answerForm = document.getElementById('question_area'); // フォーム要素を取得
-  let userId = document.querySelector('input[name="user_id"]').value;
+  const audio = new Audio('/jingle.mp3');
+  const answerForm = document.getElementById('question_area'); // フォーム要素を取得
+  const userId = document.querySelector('input[name="user_id"]').value;
 
       if (answerForm) {
         answerForm.addEventListener('submit', function(event) {
-          let radioGroups = {};
+          const radioGroups = {};
           let isValid = true;
     
           // ラジオボタンのチェック状態を確認
@@ -31,7 +31,7 @@ document.addEventListener('turbo:load', function() {
           });
     
           // すべてのラジオボタングループがチェックされているか確認
-          for (let groupName in radioGroups) {
+          for (const groupName in radioGroups) {
             if (!radioGroups[groupName]) {
               isValid = false; // 未チェックのグループがあれば無効
               break;
@@ -69,7 +69,7 @@ document.addEventListener('turbo:load', function() {
     });
 
     intervalId = setInterval(function() {
-      let questionBox = document.getElementById("question_box");
+      const questionBox = document.getElementById("question_box");
       if (questionBox.style.display === "none") {
         questionBox.style.display = "block";
         audio.play().catch(function(error) {
@@ -119,7 +119,7 @@ document.addEventListener('turbo:load', function() {
 // フォームの回答が終わったら非表示にする
 // _final_messageで着火させてる
 document.addEventListener('form-completed', function() {
-  let questionBox = document.getElementById("question_box");
+  const questionBox = document.getElementById("question_box");
   if (questionBox) {
     questionBox.style.display = "none";
   }
